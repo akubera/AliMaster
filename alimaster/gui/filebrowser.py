@@ -7,6 +7,8 @@ from tkinter.ttk import *
 
 from PIL import Image, ImageTk
 
+from . import RES
+
 class FileBrowserWindow():
 
   def __init__(self, control, master):
@@ -20,18 +22,20 @@ class FileBrowserWindow():
     
     s = Style()
     s.configure('Sidebar_FileBrowser.TFrame', background='blue')
+    s.configure('Toolbar.TButton', foreground='red', background='black', height=64)
 
 
     print(ttk.Style().lookup("SidebarFileBrowser.TFrame", "background"))
 
 
-    toolbar = Frame(self.frame, relief=RAISED)
-    #self.img = Image.open("exit.png")
-    #eimg = ImageTk.PhotoImage(self.img)  
-    toolbar.pack(side=TOP, fill=X)
-
-    self.label = Label(self.frame, text="Files").pack()
-
+    self.toolbar = Frame(self.frame, relief=RAISED)
+#     tool = Label(self.toolbar, text=1"TOOL").pack()
+    self.img = Image.open(RES("right_arrow.png"))
+    #     self.img.thumbnail((24,24))
+    self.eimg = ImageTk.PhotoImage(self.img)
+    self.back_b = Button(self.toolbar, style='Toolbar.TButton', text='back', command=lambda:print("left button")).pack(side=LEFT, padx=2, pady=2)
+    self.forward_b = Button(self.toolbar, style='Toolbar.TButton', text='next', command=lambda:print("right button")).pack(side=LEFT, padx=2, pady=2)
+    self.toolbar.pack(side=TOP, fill=X, expand=0)
 
     self.status = StringVar()
     self.statusbar = Label(self.frame, textvar= self.status, font=("DejaVu Sans Mono", 8), relief='sunken')
@@ -42,8 +46,14 @@ class FileBrowserWindow():
     self.label = Label(self.sidebar, text="Sidebar").pack()
     self.sidebar.pack(fill=Y, side=LEFT, expand=0)
     
-    self.sidebar = Frame(self.frame, relief=FLAT, style='MainFileBrowser.TFrame')
-    self.sidebar.pack(fill=BOTH, expand=1)    
+    self.content = Frame(self.frame, relief=FLAT, style='MainFileBrowser.TFrame')
+    self.content.pack(fill=BOTH, expand=1)    
+
+
+
+    self.label = Label(self.content, text="Files").pack()
+
+
 
     self.frame.pack(fill=BOTH, expand=True)
 

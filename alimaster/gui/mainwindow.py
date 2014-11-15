@@ -5,8 +5,8 @@
 from tkinter import *
 from tkinter.ttk import *
 
+from . import __version__
 from .filebrowser import FileBrowserWindow
-from .. import __version__
 
 class MainWindow():
 
