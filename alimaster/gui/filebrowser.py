@@ -19,13 +19,8 @@ class FileBrowserWindow():
     self._setup_menu()
 
     self.frame = Frame(self.window)
-    
-    s = Style()
-    s.configure('Sidebar_FileBrowser.TFrame', background='blue')
-    s.configure('Toolbar.TButton', foreground='red', background='black', height=64)
 
-
-    print(ttk.Style().lookup("SidebarFileBrowser.TFrame", "background"))
+    print(ttk.Style().lookup("SidebarFileBrowser.TFrame", "bg"))
 
 
     self.toolbar = Frame(self.frame, relief=RAISED)
@@ -41,9 +36,11 @@ class FileBrowserWindow():
     self.statusbar = Label(self.frame, textvar= self.status, font=("DejaVu Sans Mono", 8), relief='sunken')
     self.statusbar.pack(expand=0, fill=X, side=BOTTOM, anchor= S, padx=1,pady=2)
     self.set_status("Initializing")
-    
-    self.sidebar = Frame(self.frame, relief=FLAT, style='SidebarFileBrowser.TFrame')
-    self.label = Label(self.sidebar, text="Sidebar").pack()
+
+    #     self.tree_view = (parent, **kwargs)
+
+    self.sidebar = Treeview(self.frame, style='SidebarFileBrowser.TFrame')
+    #     self.label = Label(self.sidebar, text="Sidebar").pack()
     self.sidebar.pack(fill=Y, side=LEFT, expand=0)
     
     self.content = Frame(self.frame, relief=FLAT, style='MainFileBrowser.TFrame')

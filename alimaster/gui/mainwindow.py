@@ -7,6 +7,7 @@ from tkinter.ttk import *
 
 from . import __version__
 from .filebrowser import FileBrowserWindow
+from .style import *
 
 class MainWindow():
 
@@ -18,10 +19,12 @@ class MainWindow():
     self.window.minsize(220,500)
     self.window.title("Alimaster Control")
     self.window.protocol("WM_DELETE_WINDOW", self.hide)
-    
-    status_style = Style()
-    status_style.configure("StatusGood.TLabel", foreground="green")
-    status_style.configure("StatusBad.TLabel", foreground="red")
+
+
+    self.style = Style()
+    GenerateStyle(self.style)
+    #status_style.configure("StatusGood.TLabel", foreground="green")
+    #status_style.configure("StatusBad.TLabel", foreground="red")
 
     self.frame = Frame(self.window)
     self.status_bar = Frame(self.frame)
