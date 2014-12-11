@@ -53,23 +53,19 @@ class Application:
 
     self.root = self.generate_window()
 
-    # img = Image.open(alimaster.RES('icon.png'))
-    # img = ImageTk.PhotoImage(img)
-
     from .gui.style import style
     style.theme_use('alimaster')
 
-    # self.root.tk.call('wm', 'iconphoto', self.root._w, img)
+    self.logo = ImageTk.PhotoImage(Image.open(alimaster.RES('icon.png')))
     self.root.withdraw()
     self.root.protocol("WM_DELETE_WINDOW", self.quit)
 
-    self.mwin = self.get_new_window(self.window_info['title'], (400,300))
-    self.get_new_window("TESTER")
+    # self.mwin = self.get_new_window(self.window_info['title'], (400,300))
 
     #from .gui.style import style
 
-    self._frame = Frame(self.mwin, width=self.window_info['w'], height=self.window_info['h'])
-    self._frame.pack(fill=BOTH, expand=1)
+    # self._frame = Frame(self.mwin, width=self.window_info['w'], height=self.window_info['h'])
+    # self._frame.pack(fill=BOTH, expand=1)
 
     self.main_window = MainWindow(self)
     # self.root = self.generate_window()
@@ -119,6 +115,7 @@ class Application:
     res = Toplevel(self.root)
     res.minsize(*minsize)
     res.protocol("WM_DELETE_WINDOW", self._release_window(res))
+    res.tk.call('wm', 'iconphoto', res._w, self.logo)
     res.title(title)
     self._win_count += 1
     return res
