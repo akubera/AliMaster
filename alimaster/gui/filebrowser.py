@@ -20,13 +20,9 @@ class FileBrowserWindow():
 
     self.frame = Frame(self.window)
 
-    print(ttk.Style().lookup("SidebarFileBrowser.TFrame", "bg"))
-
-
     self.toolbar = Frame(self.frame, relief=RAISED)
 #     tool = Label(self.toolbar, text=1"TOOL").pack()
     self.img = Image.open(RES("right_arrow.png"))
-    #     self.img.thumbnail((24,24))
     self.eimg = ImageTk.PhotoImage(self.img)
     self.back_b = Button(self.toolbar, style='Toolbar.TButton', text='back', command=lambda:print("left button")).pack(side=LEFT, padx=2, pady=2)
     self.forward_b = Button(self.toolbar, style='Toolbar.TButton', text='next', command=lambda:print("right button")).pack(side=LEFT, padx=2, pady=2)

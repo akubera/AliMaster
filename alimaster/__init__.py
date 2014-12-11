@@ -18,4 +18,4 @@ __all__ = ['__version__', '__author__', '__author_email__']
 
 from .gui.mainwindow import MainWindow
 
-
+from .alicommunicator import AliCommunicator
