@@ -9,6 +9,9 @@ from . import __version__
 from .filebrowser import FileBrowserWindow
 from .style import *
 
+import threading
+from threading import Thread
+
 class MainWindow():
 
   def __init__(self, master):
@@ -21,8 +24,8 @@ class MainWindow():
     self.window.protocol("WM_DELETE_WINDOW", self.hide)
 
 
-    self.style = Style()
-    GenerateStyle(self.style)
+    #self.style = Style()
+    #GenerateStyle(self.style)
     #status_style.configure("StatusGood.TLabel", foreground="green")
     #status_style.configure("StatusBad.TLabel", foreground="red")
 
@@ -66,3 +69,5 @@ class MainWindow():
   def set_status_good(self):
     self.status_bar.status.configure(style = 'StatusGood.TLabel')
 
+  def run_in_thread():
+    pass

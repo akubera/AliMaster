@@ -1,14 +1,19 @@
 #
-#
+# alimaster/gui/style.py
 #
 
 from tkinter import *
 from tkinter.ttk import *
 
 
-def GenerateStyle(style):
-  style.configure("StatusGood.TLabel", foreground="green")
-  style.configure("StatusBad.TLabel", foreground="red")
+style = ttk.Style()
 
-  style.configure('Sidebar_FileBrowser.TFrame', background='blue')
-  style.configure('Toolbar.TButton', foreground='red', background='black', height=64)
+style.theme_create("alimaster", parent='alt', settings={
+  "TNotebook": {"configure": {"tabmargins": [2, 5, 2, 0]}},
+  "TNotebook.Tab": {
+    "configure": {"padding": [5, 1]}
+  },
+  "alienwindow.TFrame" : {
+    "configure": {"padding": [5, 1]}
+  }
+})

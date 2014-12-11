@@ -2,16 +2,16 @@
 # setup.py
 #
 
+from alimaster import metadata
+
 from setuptools import setup
 
-from alimaster import *
-
-setup(       name = 'AliMaster',
-          version = __version__,
-    	     author = __author__,
-   	 author_email = 'andrew.michael.kubera@cern.ch',
-              url = 'http://github.com/akubera/AliMaster',
-          license = 'LGPLv3+',
+setup(       name = metadata.package,
+          version = metadata.version,
+    	     author = metadata.author,
+   	 author_email = metadata.author_email,
+              url = metadata.url,
+          license = metadata.license,
       description = "A (non-web) graphic user interface for interacting with AliMonitor",
  long_description = """AliMaster intends to be a utility for managing files and jobs on
  CERN's grid through AliMonitor. It currently uses the commands provided by the AliEn
@@ -22,7 +22,7 @@ setup(       name = 'AliMaster',
          packages = ['alimaster'],
           scripts = ['scripts/alimaster'],
 
- install_requires = ['tkinter'],
+ install_requires = ['tkinter', 'pillow'],
 
       classifiers = [
         "Development Status :: 2 - Pre-Alpha",
