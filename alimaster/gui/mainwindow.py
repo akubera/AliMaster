@@ -7,27 +7,27 @@ from tkinter.ttk import *
 
 from . import __version__
 from .filebrowser import FileBrowserWindow
-from .style import *
 
 import threading
 from threading import Thread
 
 class MainWindow():
 
-  def __init__(self, master):
+  def __init__(self, app):
     '''Create the main 'control' window of the AliMaster program'''
-    self.root = master
+    self.root = app.root
 
-    self.window = Toplevel(master)
-    self.window.minsize(220,500)
-    self.window.title("Alimaster Control")
-    self.window.protocol("WM_DELETE_WINDOW", self.hide)
+    self.window = app.get_new_window("Alimaster Control", (220, 500))
 
+    # self.window = Toplevel(master)
+    # self.window.minsize(220,500)
+    # self.window.title("Alimaster Control")
+    # self.window.protocol("WM_DELETE_WINDOW", self.hide)
 
     #self.style = Style()
     #GenerateStyle(self.style)
-    #status_style.configure("StatusGood.TLabel", foreground="green")
-    #status_style.configure("StatusBad.TLabel", foreground="red")
+    # status_style.configure("StatusGood.TLabel", foreground="green")
+    # status_style.configure("StatusBad.TLabel", foreground="red")
 
     self.frame = Frame(self.window)
     self.status_bar = Frame(self.frame)
@@ -47,7 +47,14 @@ class MainWindow():
     self.help.pack(fill=X, pady=(9,3), padx=4)
     self.quit.pack(fill=X, pady=(3,9), padx=4)
     self.set_status_good()
-    
+
+
+    from pprint import pprint
+
+    pprint(self.help.configure())
+
+
+
     self.frame.pack(fill=BOTH, expand=1)
 
   def quit(self):
@@ -56,7 +63,7 @@ class MainWindow():
 
   def hide(self):
     self.window.withdraw()
-    
+
   def show(self):
     self.window.update()
 
@@ -67,6 +74,7 @@ class MainWindow():
     self.status_bar.status.configure(style = 'StatusBad.TLabel')
     
   def set_status_good(self):
+    from .style import style
     self.status_bar.status.configure(style = 'StatusGood.TLabel')
 
   def run_in_thread():

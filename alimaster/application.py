@@ -13,7 +13,7 @@ from asyncio import (new_event_loop)
 from alimaster.alien import Alien
 
 import alimaster
-
+from .gui import MainWindow
 
 class Application:
 
@@ -44,7 +44,6 @@ class Application:
     if handle_signals:
       self.handle_signals()
 
-
     self.alien = Alien()
     self.alien_thread = Thread(name="AlienThread", target= self.alien.wait_for_command)
 
@@ -57,7 +56,8 @@ class Application:
     # img = Image.open(alimaster.RES('icon.png'))
     # img = ImageTk.PhotoImage(img)
 
-
+    from .gui.style import style
+    style.theme_use('alimaster')
 
     # self.root.tk.call('wm', 'iconphoto', self.root._w, img)
     self.root.withdraw()
@@ -67,12 +67,11 @@ class Application:
     self.get_new_window("TESTER")
 
     #from .gui.style import style
-    #style.theme_use('alimaster')
 
     self._frame = Frame(self.mwin, width=self.window_info['w'], height=self.window_info['h'])
     self._frame.pack(fill=BOTH, expand=1)
 
-
+    self.main_window = MainWindow(self)
     # self.root = self.generate_window()
 
 
@@ -87,10 +86,7 @@ class Application:
 
   def quit(self):
     print("[QUIT]")
-
-    self._win_count -= 1
-    if self._win_count == 0:
-      self.root.after(0, self.root.quit)
+    self.root.after(0, self.root.quit)
     return True
 
   def main_gui_loop(self):
@@ -110,10 +106,19 @@ class Application:
       self.gui_thread.start()
       self.gui_thread.join()
 
+  def _release_window(self, window):
+    def _doit():
+      self._win_count -= 1
+      if self._win_count == 0:
+        self.quit()
+      window.destroy()
+    return _doit
+
+
   def get_new_window(self, title, minsize = (500, 300)):
     res = Toplevel(self.root)
     res.minsize(*minsize)
-    res.protocol("WM_DELETE_WINDOW", lambda: self.quit() and res.destroy())
+    res.protocol("WM_DELETE_WINDOW", self._release_window(res))
     res.title(title)
     self._win_count += 1
     return res
