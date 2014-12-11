@@ -42,8 +42,6 @@ class FileBrowserWindow():
     self.content = Frame(self.frame, relief=FLAT, style='MainFileBrowser.TFrame')
     self.content.pack(fill=BOTH, expand=1)    
 
-
-
     self.label = Label(self.content, text="Files").pack()
 
 
