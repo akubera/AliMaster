@@ -23,5 +23,13 @@ __license__   = metadata.license
 __all__ = ['__version__', '__author__', '__author_email__']
 
 from .gui.mainwindow import MainWindow
+from alimaster.application import Application
 
 
+from os import path
+
+def LOCAL(f):
+  return path.join(path.dirname(__file__), f)
+
+def RES(f):
+  return LOCAL(path.join('res', f))

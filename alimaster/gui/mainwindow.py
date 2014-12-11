@@ -8,6 +8,9 @@ from tkinter.ttk import *
 from .filebrowser import FileBrowserWindow
 from .. import __version__
 
+import threading
+from threading import Thread
+
 class MainWindow():
 
   def __init__(self, master):
@@ -63,3 +66,5 @@ class MainWindow():
   def set_status_good(self):
     self.status_bar.status.configure(style = 'StatusGood.TLabel')
 
+  def run_in_thread():
+    pass
