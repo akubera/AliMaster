@@ -22,10 +22,11 @@ class Application:
   '''
   Main application class which houses multiple threads for gui and server communication.
   '''
-  def __init__(self, *, opts={}, gui_thread=True, title='AliMaster Application', width=750, height=300, window_builder=Tk):
+  def __init__(self, *, opts={}, gui_thread=True, handle_signals=False, title='AliMaster Application', width=750, height=300, window_builder=Tk):
     '''
     @param opts: Extra configuration options
     @param gui_thread: If false, runs in current thread, if True, creates new thread, if thread runs in THAT thread
+    @param handle_signals: Will automatically create a signal listener to catch and quit on SIGINT
     @param title: Title of the main window
     @param window_builder: function providing the root window
     '''
@@ -39,6 +40,10 @@ class Application:
       self.gui_thread = gui_thread
     else:
       self.gui_thread = threading.current_thread()
+
+    if handle_signals:
+      self.handle_signals()
+
 
     self.alien = Alien()
     self.alien_thread = Thread(name="AlienThread", target= self.alien.wait_for_command)
