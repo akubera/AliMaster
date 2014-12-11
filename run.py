@@ -27,8 +27,11 @@ def main():
 
   #app._build_interface()
   #app.root.mainloop()
-  # app.run()
-  app.run_in_thread()
+  app.run()
+
+  # app.run_in_thread()
+  # app.gui_thread.join()
+  print ("GUI has finished")
 
   # root.withdraw()
   # root.mainloop()

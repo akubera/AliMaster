@@ -98,7 +98,11 @@ class Application:
     self.gui_thread.start()
 
   def run(self):
-    self.main_gui_loop()
+    if threading.current_thread() == self.gui_thread:
+      self.main_gui_loop()
+    else:
+      self.gui_thread.start()
+      self.gui_thread.join()
 
   def get_new_window(self, title, minsize = (500, 300)):
     res = Toplevel(self.root)
