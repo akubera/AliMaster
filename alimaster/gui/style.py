@@ -38,7 +38,8 @@ style.theme_create("alimaster", parent='alt', settings={
   },
 
   "Toolbar.TButton": {
-    "configure": {"foreground": "red",
+    "configure": {"relief": "flat",
+                  "foreground": "red",
                   "background": "black",
                       "height": 64}
   },

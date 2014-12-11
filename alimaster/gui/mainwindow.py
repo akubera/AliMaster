@@ -48,17 +48,10 @@ class MainWindow():
     self.quit.pack(fill=X, pady=(3,9), padx=4)
     self.set_status_good()
 
-
-    from pprint import pprint
-
-    pprint(self.help.configure())
-
-
-
     self.frame.pack(fill=BOTH, expand=1)
 
   def quit(self):
-    print ("Quitting")
+    print ("[MainWindow::quit]")
     self.root.after(0, self.root.quit)
 
   def hide(self):
