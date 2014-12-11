@@ -19,7 +19,7 @@ def main():
   parser.add_argument("-c", "--conf", metavar="FILE", help="Load configuration")
   args = parser.parse_args()
 
-  app  = alimaster.Application(opts = args, gui_thread=False)
+  app  = alimaster.Application(opts = args, gui_thread=True)
 
   # main = alimaster.MainWindow()
 
@@ -27,7 +27,8 @@ def main():
 
   #app._build_interface()
   #app.root.mainloop()
-  app.run()
+  # app.run()
+  app.run_in_thread()
 
   # root.withdraw()
   # root.mainloop()

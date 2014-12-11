@@ -17,6 +17,8 @@ import alimaster
 
 class Application:
 
+  _win_count = 0
+
   '''
   Main application class which houses multiple threads for gui and server communication.
   '''
@@ -52,17 +54,20 @@ class Application:
 
 
     self.root.tk.call('wm', 'iconphoto', self.root._w, img)
-    # self.root.withdraw()
-    self.root.minsize(500, 300)
+    self.root.withdraw()
     self.root.protocol("WM_DELETE_WINDOW", self.quit)
-    self.root.title(self.window_info['title'])
+
+    self.mwin = self.get_new_window(self.window_info['title'], (400,300))
+    self.get_new_window("TESTER")
 
     #from .gui.style import style
     #style.theme_use('alimaster')
 
-    self._frame = Frame(self.root, width=self.window_info['w'], height=self.window_info['h'])
+    self._frame = Frame(self.mwin, width=self.window_info['w'], height=self.window_info['h'])
     self._frame.pack(fill=BOTH, expand=1)
 
+
+    # self.root = self.generate_window()
 
 
   def handle_signals(self):
@@ -76,7 +81,11 @@ class Application:
 
   def quit(self):
     print("[QUIT]")
-    self.root.after(0, self.root.quit)
+
+    self._win_count -= 1
+    if self._win_count == 0:
+      self.root.after(0, self.root.quit)
+    return True
 
   def main_gui_loop(self):
     self._build_interface()
@@ -91,5 +100,10 @@ class Application:
   def run(self):
     self.main_gui_loop()
 
-  def get_new_window(self):
-    return self.generate_window()
+  def get_new_window(self, title, minsize = (500, 300)):
+    res = Toplevel(self.root)
+    res.minsize(*minsize)
+    res.protocol("WM_DELETE_WINDOW", lambda: self.quit() and res.destroy())
+    res.title(title)
+    self._win_count += 1
+    return res
