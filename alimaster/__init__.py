@@ -10,9 +10,15 @@ then, AliEn (and AliROOT, for that matter) should be installed before AliMaster 
 follow the guide at https://dberzano.github.io/alice/install-aliroot.
 """
 
-__version__ = '0.0.1'
-__author__ = 'Andrew Kubera'
-__author_email__ = 'andrew.michael.kubera@cern.ch'
+import alimaster.metadata
+
+__version__   = metadata.version
+__author__    = metadata.author
+__date__      = metadata.date
+__copyright__ = metadata.copyright
+__license__   = metadata.license
+
+
 
 __all__ = ['__version__', '__author__', '__author_email__']
 
