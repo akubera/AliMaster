@@ -2,7 +2,10 @@
 # setup.py
 #
 
-from alimaster import metadata
+import os
+from importlib.machinery import SourceFileLoader
+metadata = SourceFileLoader("metadata", os.path.join(".","alimaster","metadata.py")).load_module()
+
 
 from setuptools import setup
 
@@ -23,6 +26,7 @@ setup(       name = metadata.package,
           scripts = ['scripts/alimaster'],
 
  install_requires = ['tkinter', 'pillow'],
+   extras_require = {':python_version=="3.3"': ['asyncio>=0.2.1']},
 
       classifiers = [
         "Development Status :: 2 - Pre-Alpha",
