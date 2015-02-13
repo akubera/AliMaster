@@ -7,6 +7,8 @@ from tkinter.ttk import *
 
 style = ttk.Style()
 
+from .fontawesome import _font_16 as fontawesome
+
 style.theme_create("alimaster", parent='alt', settings={
   "." : {
     "configure": {
@@ -38,6 +40,11 @@ style.theme_create("alimaster", parent='alt', settings={
   
   "Toolbar": {
     "configure" : {}
+  },
+
+  # This doesn't work (yet)
+  "Awesome.Toolbar.TButton": {
+    "configure": {'font': fontawesome}
   },
 
   "Toolbar.TButton": {

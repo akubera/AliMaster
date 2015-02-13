@@ -9,7 +9,12 @@ from alimaster import RES
 
 from PIL import ImageFont
 
-_font = ImageFont.truetype(RES("fontawesome.ttf"), 1000)
+def get_font(size):
+  return ImageFont.truetype(RES("fontawesome.ttf"), size)
+
+_font    = get_font(1000)
+_font_16 = get_font(16)
+
 
 ICONS = {     "adjust" : "\uf042",
                  "adn" : "\uf170",
@@ -558,6 +563,9 @@ class FontAwesome:
     img = cls.get_image(name)
     return img.resize((size, size), Image.ANTIALIAS)
 
+  @classmethod
+  def get_font(cls, size):
+    return get_font(size)
 
 def _parse_cheatsheet():
   """Downloads the cheatsheet"""
