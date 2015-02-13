@@ -46,9 +46,9 @@ class Application:
 
     self.alien = Alien()
     # self.alien.connect('')
-    self.alien_thread = Thread(name="AlienThread", target= self.alien.wait_for_command)
+    self.alien_thread = Thread(name="AlienThread", target= self.alien.start)
     self.alien_thread.start()
-    
+
 
   def _build_interface(self):
     print ("[_build_interface]")

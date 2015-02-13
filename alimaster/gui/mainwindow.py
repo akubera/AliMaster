@@ -36,12 +36,12 @@ class MainWindow():
     self.status_bar.label.pack(side=LEFT)
     self.status_bar.status = Label(self.status_bar, text="●")
     self.status_bar.status.pack()
-    
+
     self.label = Label(self.frame, text="AliMaster v%s" % (__version__), font=('DejaVu Mono', 16)).pack(pady=9, padx=4)
     self.status_bar.pack(fill=X, pady=(9,3), padx=4)
 
     self.help = Button(self.frame, text="Help", command=self.set_status_bad)
-    self.quit = Button(self.frame, text="Quit", command= self.app.quit)
+    self.quit = Button(self.frame, text="Quit", command=self.app.quit)
     self.file_browser = Button(self.frame, text="File Browser", command=self.create_filebrowser)
 
     self.file_browser.pack(fill=X, pady=(9,3), padx=4)
@@ -66,7 +66,7 @@ class MainWindow():
 
   def set_status_bad(self):
     self.status_bar.status.configure(style = 'StatusBad.TLabel')
-    
+
   def set_status_good(self):
     from .style import style
     self.status_bar.status.configure(style = 'StatusGood.TLabel')

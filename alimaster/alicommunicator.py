@@ -9,7 +9,7 @@ class AliCommunicator():
   The AliCommunicator provides a simple interface for sending and retrieving messages
   to the ALICE grid.
   """
-  
+
   def __init__(self, loop = None, run_forever=True):
     """
     Creates a communicator.
@@ -23,7 +23,10 @@ class AliCommunicator():
     self.loop = asyncio.get_event_loop() if not loop else loop
     asyncio.set_event_loop(loop)
     self._start()
-    if run_forever: self.run_forever();
+    if run_forever:
+      self.run_forever()
+    else:
+      self._start() 
 
   @asyncio.coroutine
   def run(self, args):

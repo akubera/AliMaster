@@ -56,11 +56,11 @@ class FileBrowserWindow():
     self.sidebar = Treeview(self.frame, style='SidebarFileBrowser.TFrame')
     #     self.label = Label(self.sidebar, text="Sidebar").pack()
     self.sidebar.pack(fill=Y, side=LEFT, expand=0)
-    
-    self.content = Frame(self.frame, relief=FLAT, style='MainFileBrowser.TFrame')
-    self.content.pack(fill=BOTH, expand=1)    
 
-    self.label = Label(self.content, text="Files").pack()
+    self.content = Frame(self.frame, relief=FLAT, style='MainFileBrowser.TFrame')
+    self.content.pack(fill=BOTH, expand=1)
+    self.folder_img = ImageTk.PhotoImage(FontAwesome.generate_icon('folder', 12))
+    self.label = Label(self.content, text="Files", image=self.folder_img, compound='left').pack()
 
 
 
@@ -68,10 +68,10 @@ class FileBrowserWindow():
 
   def new_file(self):
     pass
-    
+
   def quit(self):
     pass
-    
+
   def set_status(self, msg= ''):
     self.status.set(' ' + msg)
 
@@ -113,10 +113,10 @@ class FileBrowserWindow():
 
   def on_left_button(self):
     print ("[on_left_button]")
-    
+
     def _cb(arg):
       print ("[_cb]", arg)
-    
+
     self.app.alien.call(_cb, 'ls')
 
   @classmethod
