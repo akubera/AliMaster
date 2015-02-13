@@ -15,6 +15,7 @@ class MainWindow():
 
   def __init__(self, app):
     '''Create the main 'control' window of the AliMaster program'''
+    self.app = app
     self.root = app.root
 
     self.window = app.get_new_window("Alimaster Control", (220, 500))
