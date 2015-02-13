@@ -14,30 +14,30 @@ from .fontawesome import FontAwesome
 
 class FileBrowserWindow():
 
-  toolbar_icon_size = 22
+  toolbar_icon_size = 16
 
   left_arrow_img = FontAwesome.generate_icon('chevron-left', toolbar_icon_size)
   right_arrow_img = FontAwesome.generate_icon('chevron-right', toolbar_icon_size)
+  home_img = FontAwesome.generate_icon('home', toolbar_icon_size)
+
+  default_height = 480
+  default_width = 640
 
   def __init__(self, control, master):
+    self._generate_icons()
     self.root = master
     self.window = Toplevel(self.root)
     self.window.minsize(220,300)
     self.window.title("Alimaster File Browser")
     self._setup_menu()
 
-    self.frame = Frame(self.window, width=640,height=480)
+    self.frame = Frame(self.window, width = self.default_width, height = self.default_height)
     self.frame.pack_propagate(0)
 
     self.toolbar = Frame(self.frame, relief=RAISED)
-    toolbar_icon_size = 17
-    self.larrow = ImageTk.PhotoImage(FontAwesome.generate_icon('chevron-left', toolbar_icon_size))
-    self.rarrow = ImageTk.PhotoImage(FontAwesome.generate_icon('chevron-right', toolbar_icon_size))
-    self.homeimg = ImageTk.PhotoImage(FontAwesome.generate_icon('home', toolbar_icon_size))
-    print ('eimg', self.left_arrow_img)
-    self.back_b = Button(self.toolbar, style='Toolbar.TButton', image=self.larrow, command=lambda:print("left button")).pack(side=LEFT, padx=0, pady=2)
-    self.forward_b = Button(self.toolbar, style='Toolbar.TButton', image=self.rarrow, command=lambda:print("right button")).pack(side=LEFT, padx=0, pady=2)
-    self.home_b = Button(self.toolbar, style='Toolbar.TButton', image=self.homeimg, text='Home', command=lambda:print("GOHOME")).pack(side=LEFT, padx=(12,0), pady=2)
+    self.back_b = Button(self.toolbar, style='Toolbar.TButton', image=self.left_arrow_img, command=lambda:print("left button")).pack(side=LEFT, padx=0, pady=2)
+    self.forward_b = Button(self.toolbar, style='Toolbar.TButton', image=self.right_arrow_img, command=lambda:print("right button")).pack(side=LEFT, padx=0, pady=2)
+    self.home_b = Button(self.toolbar, style='Toolbar.TButton', image=self.home_img, text='Home', command=lambda:print("GOHOME")).pack(side=LEFT, padx=(12,0), pady=2)
     self.search_b = Button(self.toolbar, style='Toolbar.TButton', text='Search', command=lambda:print("Search button")).pack(side=RIGHT, padx=2, pady=2)
 
     self.toolbar.pack(side=TOP, fill=X, expand=0)
@@ -105,3 +105,10 @@ class FileBrowserWindow():
     self.menubar.add_cascade(menu=m_help, label= "Help")
 
     self.window.config(menu=self.menubar)
+
+  @classmethod
+  def _generate_icons(cls):
+    if isinstance(cls.home_img, ImageTk.PhotoImage): return
+    cls.home_img = ImageTk.PhotoImage(cls.home_img)
+    cls.left_arrow_img = ImageTk.PhotoImage(cls.left_arrow_img.crop((0,0,cls.toolbar_icon_size - 5, cls.toolbar_icon_size)))
+    cls.right_arrow_img = ImageTk.PhotoImage(cls.right_arrow_img.crop((0,0,cls.toolbar_icon_size - 5, cls.toolbar_icon_size)))
