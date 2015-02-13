@@ -46,6 +46,8 @@ class Application:
 
     self.alien = Alien()
     self.alien_thread = Thread(name="AlienThread", target= self.alien.wait_for_command)
+    self.alien_thread.start()
+    
 
   def _build_interface(self):
     print ("[_build_interface]")
@@ -82,6 +84,9 @@ class Application:
 
   def quit(self):
     print("[QUIT]")
+    self.alien.stop()
+    self.alien_thread.join()
+    print ("[quit] joined with alien thread")
     self.root.after(0, self.root.quit)
     return True
 

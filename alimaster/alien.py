@@ -9,7 +9,7 @@ class Alien:
   def __init__(self):
     self.cnx = None
 
-    self.loop = asyncio.new_event_loop()
+    self.loop = None
 
     self.is_connected = lambda: self.cnx != None
 
@@ -22,8 +22,19 @@ class Alien:
     # self.cnx = ROOT.TGrid.Connect("alien://aliendb4.cern.ch:9000", username, 0, "-debug=1")
     self.cnx = ROOT.TGrid.Connect("alien://", None, None, 't')
 
-  def wait_for_command():
-    pass
+  def wait_for_command(self):
+    self.loop = asyncio.new_event_loop()
+    self.continue_looping = True
+    asyncio.set_event_loop(self.loop)
+
+    @asyncio.coroutine
+    def _inner_loop():
+      while self.continue_looping:
+        print ("Waiting for command")
+        yield from asyncio.sleep(3)
+      print ("DONE LOOPING")
+
+    self.loop.run_until_complete(_inner_loop())
 
   @asyncio.coroutine
   def insert_command(self, cmd, *args):
@@ -44,4 +55,9 @@ class Alien:
     yield from [res.GetFileName(i) for i in range(0,res.GetEntries())]
 
 
-
+  def stop(self):
+    """Stops the asyncio loop - thus ending the thread"""
+    if self.loop:
+      self.continue_looping = False
+      # Only use stop() if you do loop.run_forever()
+      # self.loop.stop()    

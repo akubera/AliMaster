@@ -41,7 +41,7 @@ class MainWindow():
     self.status_bar.pack(fill=X, pady=(9,3), padx=4)
 
     self.help = Button(self.frame, text="Help", command=self.set_status_bad)
-    self.quit = Button(self.frame, text="Quit", command= self.quit)
+    self.quit = Button(self.frame, text="Quit", command= self.app.quit)
     self.file_browser = Button(self.frame, text="File Browser", command=self.create_filebrowser)
 
     self.file_browser.pack(fill=X, pady=(9,3), padx=4)
