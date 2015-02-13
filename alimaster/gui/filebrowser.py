@@ -9,7 +9,15 @@ from PIL import Image, ImageTk
 
 from . import RES
 
+from .fontawesome import FontAwesome
+
+
 class FileBrowserWindow():
+
+  toolbar_icon_size = 22
+
+  left_arrow_img = FontAwesome.generate_icon('chevron-left', toolbar_icon_size)
+  right_arrow_img = FontAwesome.generate_icon('chevron-right', toolbar_icon_size)
 
   def __init__(self, control, master):
     self.root = master
@@ -22,11 +30,14 @@ class FileBrowserWindow():
     self.frame.pack_propagate(0)
 
     self.toolbar = Frame(self.frame, relief=RAISED)
-    self.img = Image.open(RES("right_arrow.png"))
-    self.eimg = ImageTk.PhotoImage(self.img)
-    self.back_b = Button(self.toolbar, style='Toolbar.TButton', text='◀', command=lambda:print("left button")).pack(side=LEFT, padx=0, pady=2)
-    self.forward_b = Button(self.toolbar, style='Toolbar.TButton', text='▶', command=lambda:print("right button")).pack(side=LEFT, padx=0, pady=2)
-    self.home_b = Button(self.toolbar, style='Toolbar.TButton', text='Home', command=lambda:print("GOHOME")).pack(side=LEFT, padx=(12,0), pady=2)
+    toolbar_icon_size = 17
+    self.larrow = ImageTk.PhotoImage(FontAwesome.generate_icon('chevron-left', toolbar_icon_size))
+    self.rarrow = ImageTk.PhotoImage(FontAwesome.generate_icon('chevron-right', toolbar_icon_size))
+    self.homeimg = ImageTk.PhotoImage(FontAwesome.generate_icon('home', toolbar_icon_size))
+    print ('eimg', self.left_arrow_img)
+    self.back_b = Button(self.toolbar, style='Toolbar.TButton', image=self.larrow, command=lambda:print("left button")).pack(side=LEFT, padx=0, pady=2)
+    self.forward_b = Button(self.toolbar, style='Toolbar.TButton', image=self.rarrow, command=lambda:print("right button")).pack(side=LEFT, padx=0, pady=2)
+    self.home_b = Button(self.toolbar, style='Toolbar.TButton', image=self.homeimg, text='Home', command=lambda:print("GOHOME")).pack(side=LEFT, padx=(12,0), pady=2)
     self.search_b = Button(self.toolbar, style='Toolbar.TButton', text='Search', command=lambda:print("Search button")).pack(side=RIGHT, padx=2, pady=2)
 
     self.toolbar.pack(side=TOP, fill=X, expand=0)

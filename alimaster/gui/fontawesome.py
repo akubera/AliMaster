@@ -532,8 +532,32 @@ ICONS = {     "adjust" : "\uf042",
 
 class FontAwesome:
   
+  texture_cache = dict()
+  
   def __init__(self):
     pass
+    
+  @classmethod
+  def get_image(cls, name):
+    from PIL import (Image, ImageDraw)
+    if not name in cls.texture_cache:
+      img = Image.new("RGBA", (1000,1000))
+      try:
+        ImageDraw.Draw(img).text((0, 0), ICONS[name], (0,0,0), font=_font)
+      except NameError as e:
+        import sys
+        print ("Error: Could not find icon with name '%s'." % name, file=sys.stderr)
+        raise e
+    else:
+      img = cls.texture_cache[name]
+    return img
+
+  @classmethod
+  def generate_icon(cls, name, size):
+    from PIL import (Image)
+    img = cls.get_image(name)
+    return img.resize((size, size), Image.ANTIALIAS)
+
 
 def _parse_cheatsheet():
   """Downloads the cheatsheet"""
@@ -543,3 +567,4 @@ def _parse_cheatsheet():
   regex = 'fa-([a-z\-]+)\s*<span class="muted">\s*\[&amp;#x([a-z0-9]+);\]'
   pairs = ['{0:>22} : "\\u{1}"'.format('"%s"' % x[0], x[1]) for x in re.findall(regex, html)]
   return ',\n'.join(pairs)
+
