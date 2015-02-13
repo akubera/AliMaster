@@ -30,10 +30,18 @@ class Alien:
     # print ("run forever is done")
 
   def call(self, cb, cmd, *args):
-    self.loop.call_soon_threadsafe(self._insert_command, [cb, cmd, args])
+    self.loop.call_soon_threadsafe(self._insert_command, cb, cmd, args)
 
-  def _insert_command(self, *args):
-    print ('[_insert_command]', args)
+  def ls(self, cb, path = '.'):
+    self.loop.call_soon_threadsafe(self._insert_command, cb, 'ls', path)
+
+  def PWD(self, cb):
+    self.loop.call_soon_threadsafe(self._insert_command, cb, 'pwd')
+
+  def _insert_command(self, callback, cmd, *args):
+    print ('[_insert_command]', cmd)
+    res = [1,2,3]
+    callback(res)
 
   def pwd(self):
     return self.insert_commandself.cnx.Pwd()
