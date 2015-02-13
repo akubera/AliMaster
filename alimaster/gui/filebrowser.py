@@ -18,18 +18,28 @@ class FileBrowserWindow():
     self.window.title("Alimaster File Browser")
     self._setup_menu()
 
-    self.frame = Frame(self.window)
+    self.frame = Frame(self.window, width=640,height=480)
+    self.frame.pack_propagate(0)
 
     self.toolbar = Frame(self.frame, relief=RAISED)
-#     tool = Label(self.toolbar, text=1"TOOL").pack()
     self.img = Image.open(RES("right_arrow.png"))
     self.eimg = ImageTk.PhotoImage(self.img)
-    self.back_b = Button(self.toolbar, style='Toolbar.TButton', text='back', command=lambda:print("left button")).pack(side=LEFT, padx=2, pady=2)
-    self.forward_b = Button(self.toolbar, style='Toolbar.TButton', text='next', command=lambda:print("right button")).pack(side=LEFT, padx=2, pady=2)
+    self.back_b = Button(self.toolbar, style='Toolbar.TButton', text='◀', command=lambda:print("left button")).pack(side=LEFT, padx=0, pady=2)
+    self.forward_b = Button(self.toolbar, style='Toolbar.TButton', text='▶', command=lambda:print("right button")).pack(side=LEFT, padx=0, pady=2)
+    self.home_b = Button(self.toolbar, style='Toolbar.TButton', text='Home', command=lambda:print("GOHOME")).pack(side=LEFT, padx=(12,0), pady=2)
+    self.search_b = Button(self.toolbar, style='Toolbar.TButton', text='Search', command=lambda:print("Search button")).pack(side=RIGHT, padx=2, pady=2)
+
     self.toolbar.pack(side=TOP, fill=X, expand=0)
 
+    self.location_var = StringVar()
+    self.locationbox = Combobox(self.frame, height=12, textvariable=self.location_var)
+    self.locationbox.bind('<Return>', lambda ev: print("RETURN", ev.widget.get())) #  dir(ev), ))
+    self.locationbox.bind('<<ComboboxSelected>>', lambda ev: print("EVENT",ev))
+    self.locationbox.pack(side=TOP, fill=X, padx=8,pady=3, expand=0)
+    self.location_var.set('~')
+
     self.status = StringVar()
-    self.statusbar = Label(self.frame, textvar= self.status, font=("DejaVu Sans Mono", 8), relief='sunken')
+    self.statusbar = Label(self.frame, textvar= self.status, font=("DejaVu Sans", -10), relief='sunken')
     self.statusbar.pack(expand=0, fill=X, side=BOTTOM, anchor= S, padx=1,pady=2)
     self.set_status("Initializing")
 

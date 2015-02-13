@@ -5,7 +5,6 @@
 from tkinter import *
 from tkinter.ttk import *
 
-
 style = ttk.Style()
 
 style.theme_create("alimaster", parent='alt', settings={
@@ -36,12 +35,14 @@ style.theme_create("alimaster", parent='alt', settings={
   "Sidebar_FileBrowser.TFrame": {
     "configure": {"background": "blue"}
   },
+  
+  "Toolbar": {
+    "configure" : {}
+  },
 
   "Toolbar.TButton": {
     "configure": {"relief": "flat",
-                  "foreground": "red",
-                  "background": "black",
-                      "height": 64}
+                'font': ('DejaVu Mono', -13)}
   },
 
   "TButton": {
@@ -51,6 +52,5 @@ style.theme_create("alimaster", parent='alt', settings={
                 'padding': 3},
     "map": {"foreground": [("pressed", '#444'), ('active', '#444')]}
   }
-
 
 })
