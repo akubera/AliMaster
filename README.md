@@ -25,3 +25,9 @@ can be imported by any python script to send AliEn commands.
 
 Good luck, and if you have any any issues or feature-requests, please create an issue on
 [github](https://github.com/akubera/AliMaster/issues).
+
+## FontAwesome
+
+This code uses and packages the font [Font Awesome](http://fontawesome.io) by Dave Gandy,
+licensed under the [SIL OFL 1.1](http://scripts.sil.org/OFL). All rights belong to 
+owners.

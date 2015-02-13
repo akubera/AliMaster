@@ -12,4 +12,4 @@ def RES(filename):
 # from mainwindow import MainWindow
 from .mainwindow import MainWindow
 
-
+from .fontawesome import FontAwesome
