@@ -26,19 +26,14 @@ class Alien:
     self.loop = asyncio.new_event_loop()
     self.continue_looping = True
     asyncio.set_event_loop(self.loop)
+    self.loop.run_forever()
+    # print ("run forever is done")
 
-    @asyncio.coroutine
-    def _inner_loop():
-      while self.continue_looping:
-        print ("Waiting for command")
-        yield from asyncio.sleep(3)
-      print ("DONE LOOPING")
+  def call(self, cb, cmd, *args):
+    self.loop.call_soon_threadsafe(self._insert_command, [cb, cmd, args])
 
-    self.loop.run_until_complete(_inner_loop())
-
-  @asyncio.coroutine
-  def insert_command(self, cmd, *args):
-    pass
+  def _insert_command(self, *args):
+    print ('[_insert_command]', args)
 
   def pwd(self):
     return self.insert_commandself.cnx.Pwd()
@@ -58,6 +53,5 @@ class Alien:
   def stop(self):
     """Stops the asyncio loop - thus ending the thread"""
     if self.loop:
-      self.continue_looping = False
-      # Only use stop() if you do loop.run_forever()
-      # self.loop.stop()    
+      self.loop.call_soon_threadsafe(self.loop.stop) 
+      # print ("Alien Stopped")
