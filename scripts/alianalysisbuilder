@@ -7,6 +7,15 @@
 from tkinter import *
 from tkinter.ttk import *
 
+from alimaster.aliroot import AliAnalysisManager
+# import alimaster
+
+# from alimaster import aliroot
+
+# print(dir(alimaster))
+
+mgr = AliAnalysisManager(name='mgr')
+print (mgr.write_to_json_string())
 from PyQt4 import QtGui
 
 from argparse import ArgumentParser
@@ -89,7 +98,7 @@ class InputHandler(Treeable):
 
 
 
-class AliAnalysisManager(Treeable):
+class MyAliAnalysisManager(Treeable):
 
   name = "MyManager"
 

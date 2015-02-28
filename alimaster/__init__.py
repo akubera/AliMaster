@@ -34,3 +34,5 @@ from .gui.mainwindow import MainWindow
 from alimaster.application import Application
 
 from .alicommunicator import AliCommunicator
+
+# import aliroot
