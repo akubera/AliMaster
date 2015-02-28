@@ -1,0 +1,271 @@
+#!/usr/bin/env python3.4
+#
+# alianalysisbuilder
+#
+"""A Tkinter GUI application to help construct AliAnalysis Objects"""
+
+from tkinter import *
+from tkinter.ttk import *
+
+from PyQt4 import QtGui
+
+from argparse import ArgumentParser
+from collections import OrderedDict
+import logging
+
+import sys
+
+class Treeable:
+
+  def __init__(self, name):
+    print ("[Treeable] ->",name, self.__class__)
+    self.leaves = [self.Leaf(x) for x in self.struct]
+
+  def GetLeaf(self, iid):
+      self
+
+  def AddLeaf(self, ):
+      pass
+
+  class Leaf:
+
+    def __init__(self, obj): # name, type, default=None, help=None):
+      constructor = {
+        tuple: self._finite_string_leaf,
+          str: self._string_leaf,
+          int: self._int_leaf,
+         bool: self._bool_leaf
+      }.get(obj['type'], None)
+
+      if not constructor is None:
+        return constructor(obj)
+
+      if isinstance(obj['type'], tuple):
+        return self._chooser_leaf(obj)
+
+      if issubclass(obj['type'], Treeable):
+        return self._subtree(obj)
+
+      print ("Creating leaf ", obj['name'], "with type", obj['type'], " [{}]".format(obj['default']))
+      self.name = obj['name']
+      self.value = obj['default']
+      self.type = obj['type']
+
+    def _string_leaf(self, obj):
+      print ("STRINGLEAF")
+
+    def _finite_string_leaf(self, obj):
+      print ("_finite_string_leaf")
+
+    def _int_leaf(self, obj):
+      print ("_int_leaf")
+
+    def _bool_leaf(self, obj):
+      print ("_bool_leaf")
+
+    def _subtree(self, obj):
+      print ("Found a subtree!!", obj['name'])
+
+    def _chooser_leaf(self, obj):
+      print ("chooser!!", obj['type'])
+
+
+class InputHandler(Treeable):
+
+  name = "MyManager"
+
+  struct = [
+
+    {'name': 'classname',
+     'help': "The title of the manager",
+     'type': str,
+  'default': "AliAODInputHandler"},
+
+    {'name': "CreatePidResponse",
+     'help': "Should be true for real data, false for MC.",
+     'type': bool,
+  'default': True}
+  ]
+
+
+
+class AliAnalysisManager(Treeable):
+
+  name = "MyManager"
+
+  struct = [
+
+    {'name': 'title',
+     'help': "The title of the manager",
+     'type': str,
+  'default': ""},
+
+    {'name': "AnalysisType",
+     'help': "The type of analysis; usually kGridAnalysis or kLocalAnalysis",
+     'type': ("kLocalAnalysis","kProofAnalysis","kGridAnalysis","kMixingAnalysis"),
+  'default': "kLocalAnalysis"},
+
+    {'name': "z",
+     'help': "Just another parameter.",
+     'type': int,
+  'default': 80},
+
+    {'name': "InputHandler",
+     'help': "Sets the kind of file reader to use, AOD, etc.",
+     'type': InputHandler,
+  'default': None}
+
+    # ("", , None)
+  ]
+
+  def __init__(self, name = None):
+    super().__init__('AliAnalysisManager')
+    if not name is None: self.name = name
+
+    # self.title = Treeable.Leaf("title", str, "")
+    # self.is_mc = Treeable.Leaf("MC", bool, False)
+
+
+  def treeify(self, view):
+    root = view.insert('', 0, text="AliAnalysisManager", value=[self.name], tags=[self.name], open=True)
+    i = view.insert(root, 'end', text=self.title.name, values=self.title.value)
+    #("AnalysisType", ("kLocalAnalysis","kProofAnalysis","kGridAnalysis","kMixingAnalysis"), "kLocalAnalysis"),
+    i = view.insert(root, 'end', text="AnalysisType", values="kLocalAnalysis")
+    # view.tag_bind(i, "<click>", lambda: print("BIND"))
+
+
+class AliAnalysisBuilder:
+
+  inputhandler_struct = (
+    ("classname", str, "AliAODInputHandler"),
+    ("CreatePidResponse", bool, True)
+  )
+
+  alianalysismanager_struct = [
+    ("name" , str, "MyManager"),
+    ("title", str, ""),
+    ("AnalysisType", ("kLocalAnalysis","kProofAnalysis","kGridAnalysis","kMixingAnalysis"), "kLocalAnalysis"),
+    ("z"    , str , "ZZZ"),
+    ("InputHandler", inputhandler_struct, None)
+  ]
+
+  def __init__(self, root):
+    self.root = root
+    self._build_interface()
+
+    # self.mgr = AliAnalysisManager()
+    # self.mgr.treeify(self.treeview)
+
+    # self.treeview['columns'] = ('name','value')
+    # self.treeview.heading(0, text="Name")
+    # self.treeview.heading('value', text="Value")
+    # manager_tree = self.treeview.insert('', 0, text="AliAnalysisManager")
+    # for item in self.alianalysismanager_struct:
+    #   if isinstance(item[1], tuple):
+    #     n = self.treeview.insert(manager_tree, 'end', text=item[0])
+    #     for subitem in item[1]:
+    #       self.treeview.insert(n, 'end', text=subitem[0], values = subitem[2])
+    #     continue
+    #
+    # #   if len(item) == 3:
+    #
+    # #   if 'default' in v:
+    #   n = self.treeview.insert(manager_tree, 'end', text=item[0], values = item[2])
+
+#      if isinstance(v, tuple):
+#        values = Combo()#
+#      print(dir(n))
+
+    self.selected = None
+
+    # self.treeview.pack(expand=1,fill=BOTH,side=LEFT)
+    # self.panel.pack(expand=1, fill=BOTH,side=LEFT)
+
+  def _build_interface(self):
+    self.window = Toplevel(self.root)
+    self.window.title("AliAnalysis Builder")
+    self.window.minsize(100,200)
+    self.window.protocol("WM_DELETE_WINDOW", self.quit)
+
+    self.pane = PanedWindow(self.window, orient=HORIZONTAL)
+    self.pane.pack(expand=1,fill=BOTH)
+
+    self.treeview = Treeview(self.pane, columns=['value'], displaycolumns='#all', selectmode="browse")
+    self.treeview.bind("<<TreeviewSelect>>", self.on_item_select)
+
+    self.panel = Frame(self.pane, width=200, height=200)
+
+    self.pane.add(self.treeview)
+    self.pane.add(self.panel)
+
+
+  def on_item_select(self, ev):
+    item = self.treeview.selection()
+    if self.selected == item: return
+    self.selected = item
+    print ("[on_item_select]")
+    print (" ", ev)
+    # rowid = self.treeview.identify_row(ev.y)
+    print (" item:", item, self.treeview.index(item), self.treeview.item(item, "value"))
+    # print (" tags:", item.tag)
+    # print (" rowid {}".format(rowid))
+
+  def run(self):
+    self.root.withdraw()
+    self.root.mainloop()
+
+  def handle_signals(self):
+    from signal import (SIGINT, signal)
+
+    def _stop(signum, frame):
+      self.quit()
+
+    signal(SIGINT, _stop)
+
+  def quit(self):
+    self.root.after(0, self.root.quit)
+
+
+class QtAliAnalysisBuilder:
+
+  def __init__(self):
+    self.app = QtGui.QApplication(sys.argv)
+
+    w = QtGui.QWidget()
+    w.resize(250, 150)
+    # w.move(300, 300)
+    w.setWindowTitle('Simple')
+    self.window = w
+
+  def handle_signals(self):
+    from signal import (SIGINT, signal)
+
+    def _stop(signum, frame):
+        sys.exit()
+
+    signal(SIGINT, _stop)
+
+  def run(self):
+    self.window.show()
+    sys.exit(self.app.exec_())
+
+def main():
+
+  parser = ArgumentParser(description="GUI helper for creating AliAnalysis scripts")
+  parser.add_argument("-c", "--conf", metavar="FILE", help="Load configuration")
+  parser.add_argument("-v", "--verbose", dest='verbose', action='store_true', help="Print helpful information")
+  args = parser.parse_args()
+
+  #log = logging.getLogger('lout')
+  #log.setLevel(logging.DEBUG if args.verbose else logging.INFO)
+  #log.info("Alimaster starting with config file '%s'" % (args.conf))
+
+  root = Tk()
+  app = AliAnalysisBuilder(root)
+  app.handle_signals()
+  app.run()
+
+  print ("GUI has finished.")
+
+if __name__ == '__main__':
+  main()
