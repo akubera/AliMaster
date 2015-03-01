@@ -23,7 +23,13 @@ class AliAnalysisManager(AliRootClass):
     },
     { 'name': 'AnalysisType',
       'type': ("kLocalAnalysis","kProofAnalysis","kGridAnalysis","kMixingAnalysis"),
-   'default': "kLocalAnalysis"      
+   'default': "kLocalAnalysis"
+    },
+    { 'name': 'fTasks',
+      'type': 'TObjArray*',
+    'getter': 'GetTasks',
+    'setter': 'AddTask',
+'visibility': 'protected'
     }
   ]
 
