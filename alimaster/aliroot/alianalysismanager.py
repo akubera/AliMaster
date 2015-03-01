@@ -28,7 +28,6 @@ class AliAnalysisManager(AliRootClass):
     { 'name': 'fTasks',
       'type': 'TObjArray*',
     'getter': 'GetTasks',
-    'setter': 'AddTask',
 'visibility': 'protected'
     }
   ]
@@ -36,3 +35,7 @@ class AliAnalysisManager(AliRootClass):
   def __init__(self, **kargs):
     super().__init__(**kargs)
     print("[AliAnalysisManager]")
+
+  def AddTask(self, task):
+    pass
+
