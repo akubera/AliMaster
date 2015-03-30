@@ -9,10 +9,12 @@ software package. Perhaps one day there will be python bindings to the services,
 then, AliEn (and AliROOT, for that matter) should be installed before AliMaster (to do so,
 follow the guide at https://dberzano.github.io/alice/install-aliroot.
 """
+import os
 from importlib.machinery import SourceFileLoader
 from os import path
 
-#import alimaster.metadata
+# from alimaster import metdata
+# ospath =
 metadata = SourceFileLoader("metadata", path.join(path.dirname(__file__),"metadata.py")).load_module()
 
 __version__   = metadata.version
@@ -28,6 +30,26 @@ def LOCAL(f):
 
 def RES(f):
   return LOCAL(path.join('res', f))
+
+def load_config(file):
+    """
+    Loads the alimaster configuration file named 'file' from the alimaster
+    configuration directory. This directory is currently forced to be:
+        $HOME/.config/alimaster
+    this might be favoring unix users, but until a windows developer wants to
+    show how to fix this, we're going to use this.
+    """
+    conf_dir = path.expanduser("~/.config")
+    if not path.isdir(conf_dir):
+        os.mkdir(conf_dir)
+    alimaster_conf = conf_dir + "/alimaster"
+    if not path.isdir(alimaster_conf):
+        os.mkdir(alimaster_conf)
+    conf_file = path.join(alimaster_conf, file)
+    return open(conf_file, 'r+')
+
+def keep_tk_awake(tk_root):
+    tk_root.after(1, lambda *args: keep_tk_awake(tk_root))
 
 
 from .gui.mainwindow import MainWindow

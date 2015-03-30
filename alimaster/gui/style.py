@@ -5,11 +5,19 @@
 from tkinter import *
 from tkinter.ttk import *
 
-style = ttk.Style()
-
 from .fontawesome import _font_16 as fontawesome
 
-style.theme_create("alimaster", parent='alt', settings={
+style = None
+
+def get_style():
+    global style, style_theme
+    if style is not None:
+        return style
+    style = ttk.Style()
+    style.theme_create("alimaster", parent='alt', settings=style_theme)
+    return style
+
+style_theme = {
   "." : {
     "configure": {
       # "font": ('Helvetica', 50)
@@ -37,7 +45,7 @@ style.theme_create("alimaster", parent='alt', settings={
   "Sidebar_FileBrowser.TFrame": {
     "configure": {"background": "blue"}
   },
-  
+
   "Toolbar": {
     "configure" : {}
   },
@@ -60,4 +68,4 @@ style.theme_create("alimaster", parent='alt', settings={
     "map": {"foreground": [("pressed", '#444'), ('active', '#444')]}
   }
 
-})
+}
