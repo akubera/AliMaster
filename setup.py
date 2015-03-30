@@ -9,7 +9,7 @@ from importlib.machinery import SourceFileLoader
 metadata_path = os.path.join(".", "alimaster", "metadata.py")
 metadata = SourceFileLoader("metadata", metadata_path).load_module()
 
-REQUIRES = ['tkinter', 'pillow']
+REQUIRES = ['pillow']
 
 EXTRAS = {
     ':python_version=="3.3"': ['asyncio>=0.2.1']
