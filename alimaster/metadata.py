@@ -6,7 +6,7 @@
 package = 'alimaster'
 project = 'A Python Module for interfacing with the ALICE experiment'
 
-version_info = (0, 0, 2)
+version_info = (0, 0, 3)
 version = '.'.join(map(str, version_info))
 version_name = ' '.join([project, 'version', version])
 
