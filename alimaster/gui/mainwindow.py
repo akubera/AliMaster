@@ -5,7 +5,7 @@
 from tkinter import *
 from tkinter.ttk import *
 
-from . import __version__
+from alimaster import __version__
 from .filebrowser import FileBrowserWindow
 from .help_window import HelpWindow
 
