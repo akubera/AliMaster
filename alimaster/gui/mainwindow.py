@@ -7,6 +7,7 @@ from tkinter.ttk import *
 
 from . import __version__
 from .filebrowser import FileBrowserWindow
+from .help_window import HelpWindow
 
 import threading
 from threading import Thread
@@ -40,7 +41,7 @@ class MainWindow():
     self.label = Label(self.frame, text="AliMaster v%s" % (__version__), font=('DejaVu Mono', 16)).pack(pady=9, padx=4)
     self.status_bar.pack(fill=X, pady=(9,3), padx=4)
 
-    self.help = Button(self.frame, text="Help", command=self.set_status_bad)
+    self.help = Button(self.frame, text="Help", command=self.create_helpwindow)
     self.quit = Button(self.frame, text="Quit", command=self.app.quit)
     self.file_browser = Button(self.frame, text="File Browser", command=self.create_filebrowser)
 
@@ -63,6 +64,9 @@ class MainWindow():
 
   def create_filebrowser(self):
     FileBrowserWindow(self, self.root)
+
+  def create_helpwindow(self):
+    HelpWindow(self, self.root)
 
   def set_status_bad(self):
     self.status_bar.status.configure(style = 'StatusBad.TLabel')
