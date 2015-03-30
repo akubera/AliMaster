@@ -13,7 +13,7 @@ from asyncio import (new_event_loop)
 from alimaster.alien import Alien
 
 import alimaster
-
+from .gui import MainWindow
 
 class Application:
 
@@ -44,9 +44,11 @@ class Application:
     if handle_signals:
       self.handle_signals()
 
-
     self.alien = Alien()
-    self.alien_thread = Thread(name="AlienThread", target= self.alien.wait_for_command)
+    # self.alien.connect('')
+    self.alien_thread = Thread(name="AlienThread", target= self.alien.start)
+    self.alien_thread.start()
+
 
   def _build_interface(self):
     print ("[_build_interface]")
@@ -54,24 +56,21 @@ class Application:
 
     self.root = self.generate_window()
 
-    img = ImageTk.PhotoImage(Image.open(alimaster.RES('icon.png')))
+    from .gui.style import style
+    style.theme_use('alimaster')
 
-
-
-    self.root.tk.call('wm', 'iconphoto', self.root._w, img)
+    self.logo = ImageTk.PhotoImage(Image.open(alimaster.RES('icon.png')))
     self.root.withdraw()
     self.root.protocol("WM_DELETE_WINDOW", self.quit)
 
-    self.mwin = self.get_new_window(self.window_info['title'], (400,300))
-    self.get_new_window("TESTER")
+    # self.mwin = self.get_new_window(self.window_info['title'], (400,300))
 
     #from .gui.style import style
-    #style.theme_use('alimaster')
 
-    self._frame = Frame(self.mwin, width=self.window_info['w'], height=self.window_info['h'])
-    self._frame.pack(fill=BOTH, expand=1)
+    # self._frame = Frame(self.mwin, width=self.window_info['w'], height=self.window_info['h'])
+    # self._frame.pack(fill=BOTH, expand=1)
 
-
+    self.main_window = MainWindow(self)
     # self.root = self.generate_window()
 
 
@@ -86,15 +85,15 @@ class Application:
 
   def quit(self):
     print("[QUIT]")
-
-    self._win_count -= 1
-    if self._win_count == 0:
-      self.root.after(0, self.root.quit)
+    self.alien.stop()
+    self.alien_thread.join()
+    print ("[quit] joined with alien thread")
+    self.root.after(0, self.root.quit)
     return True
 
   def main_gui_loop(self):
-    self._build_interface()
     print("Running main gui loop in thread", threading.current_thread())
+    self._build_interface()
     self.root.mainloop()
 
   def run_in_thread(self):
@@ -109,10 +108,20 @@ class Application:
       self.gui_thread.start()
       self.gui_thread.join()
 
+  def _release_window(self, window):
+    def _doit():
+      self._win_count -= 1
+      if self._win_count == 0:
+        self.quit()
+      window.destroy()
+    return _doit
+
+
   def get_new_window(self, title, minsize = (500, 300)):
     res = Toplevel(self.root)
     res.minsize(*minsize)
-    res.protocol("WM_DELETE_WINDOW", lambda: self.quit() and res.destroy())
+    res.protocol("WM_DELETE_WINDOW", self._release_window(res))
+    res.tk.call('wm', 'iconphoto', res._w, self.logo)
     res.title(title)
     self._win_count += 1
     return res
