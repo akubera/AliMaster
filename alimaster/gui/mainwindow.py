@@ -53,6 +53,7 @@ class MainWindow():
 
     self.file_browser.pack(fill=X, pady=(9,3), padx=4)
     self.help.pack(fill=X, pady=(9,3), padx=4)
+    self.load.pack(fill=X, pady=(3,3), padx=4)
     self.quit.pack(fill=X, pady=(3,9), padx=4)
     self.set_status_good()
 
@@ -75,12 +76,10 @@ class MainWindow():
         # self.hide()
 
   def create_filebrowser(self):
-        fb_window = self.app.get_new_window("Alimaster Control", (220, 500))
-        FileBrowserWindow(self.app, fb_window)
+        FileBrowserWindow(self.app)
 
   def create_helpwindow(self):
-        help_window = self.app.get_new_window("Alimaster Control", (220, 500))
-        HelpWindow(self, help_window)
+        HelpWindow(self.app)
 
   def set_status_bad(self):
     self.status_bar.status.configure(style = 'StatusBad.TLabel')
@@ -92,5 +91,5 @@ class MainWindow():
   def run_in_thread():
     pass
 
-  def load_root():
-      alimaster.import_root_module()
+  def load_root(self):
+        alimaster.import_root_module()

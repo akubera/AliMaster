@@ -9,7 +9,7 @@ software package. Perhaps one day there will be python bindings to the services,
 then, AliEn (and AliROOT, for that matter) should be installed before AliMaster (to do so,
 follow the guide at https://dberzano.github.io/alice/install-aliroot.
 """
-import os
+import os, sys
 from importlib.machinery import SourceFileLoader
 from os import path
 
@@ -52,7 +52,7 @@ def keep_tk_awake(tk_root):
     tk_root.after(1, lambda *args: keep_tk_awake(tk_root))
 
 _root_load_callbacks = []
-def on_root_load(func):
+def on_root_import(func):
     """
     Once the ROOT module is loaded, run func. This runnable is stored in a list
     and each is run in a first-come first-served way. These are run from the
@@ -61,14 +61,19 @@ def on_root_load(func):
     thread.
     """
     global _root_load_callbacks
-    if not has_imported("ROOT"):
+    if "ROOT" not in sys.modules:
         _root_load_callbacks.append(func)
     else:
         func()
 
 def import_root_module():
     global _root_load_callbacks
+    print ("Importing ROOT module", end='... ')
     import ROOT
+    print ("Done.")
+    gROOT = ROOT.gROOT
+    print ("Loaded ROOT Module:", ROOT.__file__)
+    print ("           Version:", gROOT.GetVersion())
     [func() for func in _root_load_callbacks]
 
 from .gui.mainwindow import MainWindow

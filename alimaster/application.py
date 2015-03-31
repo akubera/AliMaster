@@ -46,7 +46,7 @@ class Application:
       self.handle_signals()
 
     self.alien = Alien()
-    # self.alien.connect('')
+    self.alien.connect('')
     self.alien_thread = Thread(name="AlienThread", target= self.alien.start)
 
 
