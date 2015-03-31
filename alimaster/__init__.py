@@ -51,6 +51,25 @@ def load_config(file):
 def keep_tk_awake(tk_root):
     tk_root.after(1, lambda *args: keep_tk_awake(tk_root))
 
+_root_load_callbacks = []
+def on_root_load(func):
+    """
+    Once the ROOT module is loaded, run func. This runnable is stored in a list
+    and each is run in a first-come first-served way. These are run from the
+    main application thread.
+    If ROOT is already loaded, the function runs immediately in the caller's
+    thread.
+    """
+    global _root_load_callbacks
+    if not has_imported("ROOT"):
+        _root_load_callbacks.append(func)
+    else:
+        func()
+
+def import_root_module():
+    global _root_load_callbacks
+    import ROOT
+    [func() for func in _root_load_callbacks]
 
 from .gui.mainwindow import MainWindow
 from alimaster.application import Application

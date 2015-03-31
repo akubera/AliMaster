@@ -3,6 +3,7 @@
 #
 
 import asyncio
+import alimaster
 
 class Alien:
 
@@ -14,16 +15,20 @@ class Alien:
     self.is_connected = lambda: self.cnx != None
 
   def connect(self, username):
-    print ("Beginning to import ROOT")
-    import ROOT
-    print ("Done")
+    print ("Waiting for ROOT import")
 
-    assert hasattr(ROOT, 'TAlien'), "ROOT does not appear to have 'AliEn'"
-    from threading import current_thread
-    # self.cnx = ROOT.TGrid.Connect("alien://aliendb4.cern.ch:9000", username, 0, "-debug=1")
-    self.cnx = ROOT.TGrid.Connect("alien://") # , 0, 0, "-debug=1")
-    print ("Connected:", self.cnx)
-    #self.cnx = ROOT.TGrid.Connect("alien://", None, None, 't')
+    def _do_connection():
+        print ("Done")
+
+        assert hasattr(ROOT, 'TAlien'), "ROOT does not appear to have 'AliEn'"
+        from threading import current_thread
+        # self.cnx = ROOT.TGrid.Connect("alien://aliendb4.cern.ch:9000", username, 0, "-debug=1")
+        self.cnx = ROOT.TGrid.Connect("alien://") # , 0, 0, "-debug=1")
+        print ("Connected:", self.cnx)
+        #self.cnx = ROOT.TGrid.Connect("alien://", None, None, 't')
+
+    alimaster.on_root_import(_do_connection)
+
 
   def start(self):
     self.loop = asyncio.new_event_loop()
@@ -43,13 +48,13 @@ class Alien:
 
   def start_root_process(self, inpipe, outpipe):
     from threading import current_thread
-    print ("[start_root_process]", current_thread())
-    print ("[start_root_process] Beginning to import ROOT")
-    import ROOT
-    self.connect('')
-    outpipe.send ("[start_root_process] Done")
+    # print ("[start_root_process]", current_thread())
+    # print ("[start_root_process] Beginning to import ROOT")
+    # import ROOT
+    # self.connect('')
+    # outpipe.send ("[start_root_process] Done")
 
-    print ("[start_root_process] DONE")
+    # print ("[start_root_process] DONE")
 
   def root_listen(self, in_pipe, out_pipe):
 
