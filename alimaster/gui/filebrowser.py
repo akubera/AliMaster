@@ -23,13 +23,16 @@ class FileBrowserWindow():
   default_height = 480
   default_width = 640
 
-  def __init__(self, control, master):
+  def __init__(self, control, toplevel):
+    """
+        Construct a alimaster file browser inside the provided toplevel
+        """
     self._generate_icons()
     self.main_window = control
     self.app = self.main_window.app
-    self.root = master
+    # self.root = master
 
-    self.window = Toplevel(self.root)
+    self.window = toplevel #Toplevel(self.root)
     self.window.minsize(220,300)
     self.window.title("Alimaster File Browser")
     self._setup_menu()
@@ -61,8 +64,6 @@ class FileBrowserWindow():
     self.content.pack(fill=BOTH, expand=1)
     self.folder_img = ImageTk.PhotoImage(FontAwesome.generate_icon('folder', 12))
     self.label = Label(self.content, text="Files", image=self.folder_img, compound='left').pack()
-
-
 
     self.frame.pack(fill=BOTH, expand=True)
 

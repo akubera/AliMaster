@@ -50,7 +50,7 @@ def main(args):
 
   log.info("Alimaster starting with config file '%s'" % (args.conf))
 
-  app  = alimaster.Application(opts = args, gui_thread=args.gui_thread)
+  app  = alimaster.Application(opts=args, gui_thread=args.gui_thread)
   # main = alimaster.MainWindow()
 
   app.handle_signals()

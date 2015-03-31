@@ -22,6 +22,7 @@ class MainWindow():
     self.root = app.root
 
     self.window = app.get_new_window("Alimaster Control", (220, 500))
+    self.window.protocol("WM_DELETE_WINDOW", self.close)
 
     # self.window = Toplevel(master)
     # self.window.minsize(220,500)
@@ -65,8 +66,15 @@ class MainWindow():
   def show(self):
     self.window.update()
 
+  def close(self):
+        print('window_count', self.app._win_count)
+        if self.app._win_count < 2:
+            self.app.quit()
+        # self.hide()
+
   def create_filebrowser(self):
-    FileBrowserWindow(self, self.root)
+        fb_window = self.app.get_new_window("Alimaster Control", (220, 500))
+        FileBrowserWindow(self, fb_window)
 
   def create_helpwindow(self):
     HelpWindow(self, self.root)
