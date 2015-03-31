@@ -9,6 +9,8 @@ from alimaster import __version__
 from .filebrowser import FileBrowserWindow
 from .help_window import HelpWindow
 
+import alimaster
+
 import threading
 from threading import Thread
 
@@ -42,6 +44,7 @@ class MainWindow():
     self.status_bar.pack(fill=X, pady=(9,3), padx=4)
 
     self.help = Button(self.frame, text="Help", command=self.create_helpwindow)
+    self.load = Button(self.frame, text="Load ROOT", command=self.load_root)
     self.quit = Button(self.frame, text="Quit", command=self.app.quit)
     self.file_browser = Button(self.frame, text="File Browser", command=self.create_filebrowser)
 
@@ -77,3 +80,6 @@ class MainWindow():
 
   def run_in_thread():
     pass
+
+  def load_root():
+      alimaster.import_root_module()

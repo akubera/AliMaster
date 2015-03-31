@@ -1,42 +1,13 @@
 #!/usr/bin/env python3.4
+#
+# alimaster
+#
+"""
+A script to run the 'main' routine of the alimaster package
+"""
 
-
-import alimaster
-
-from tkinter import *
-from tkinter.ttk import *
-
-from argparse import ArgumentParser
-
-import logging
-
-def main():
-
-  parser = ArgumentParser()
-  parser.add_argument("-c", "--conf", metavar="FILE", help="Load configuration")
-  parser.add_argument("-v", "--verbose", dest='verbose', action='store_true', help="Print helpful information")
-  args = parser.parse_args()
-
-  log = logging.getLogger('lout')
-  log.setLevel(logging.DEBUG if args.verbose else logging.INFO)
-
-  log.info("Alimaster starting with config file '%s'" % (args.conf))
-
-  app  = alimaster.Application(opts = args, gui_thread=False)
-  # main = alimaster.MainWindow()
-
-  app.handle_signals()
-
-  #app._build_interface()
-  #app.root.mainloop()
-  app.run()
-
-  # app.run_in_thread()
-  # app.gui_thread.join()
-  print ("GUI has finished")
-
-  # root.withdraw()
-  # root.mainloop()
+import sys
+from alimaster.__main__ import main
 
 if __name__ == '__main__':
-  main()
+  sys.exit(main(sys.argv[1:]))
