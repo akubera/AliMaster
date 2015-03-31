@@ -14,14 +14,13 @@ class Alien:
 
     self.is_connected = lambda: self.cnx != None
 
-  def connect(self, username):
+  def connect(self, username = ''):
     print ("Waiting for ROOT import")
 
     def _do_connection():
         print ("_do_connection")
         import ROOT
         assert hasattr(ROOT, 'TAlien'), "ROOT does not appear to have 'AliEn'"
-        from threading import current_thread
         # self.cnx = ROOT.TGrid.Connect("alien://aliendb4.cern.ch:9000", username, 0, "-debug=1")
         self.cnx = ROOT.TGrid.Connect("alien://") # , 0, 0, "-debug=1")
         print ("Connected:", self.cnx)

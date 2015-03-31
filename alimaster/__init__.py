@@ -72,8 +72,25 @@ def import_root_module():
     import ROOT
     print ("Done.")
     gROOT = ROOT.gROOT
-    print ("Loaded ROOT Module:", ROOT.__file__)
-    print ("           Version:", gROOT.GetVersion())
+    print ("""===================
+      ROOT
+~~~~~~~~~~~~~~~~~~~
+ Version: {}
+    Date: {}
+  Module: {}
+   Alien: {}
+  Minuit: {}
+  Thread: {}
+  Libraries: {}
+===================""".format(gROOT.GetVersion(),
+                              gROOT.GetVersionDate(),
+                               ROOT.__file__,
+                               hasattr(ROOT, 'TMinuit'),
+                               hasattr(ROOT, 'TAlien'),
+                               hasattr(ROOT, 'TThread'),
+                               ROOT.gSystem.GetLibraries()
+                             ))
+
     [func() for func in _root_load_callbacks]
 
 from .gui.mainwindow import MainWindow
