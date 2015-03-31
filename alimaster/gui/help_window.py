@@ -27,14 +27,12 @@ class HelpWindow():
   default_width = 640
 
 
-  def __init__(self, control, master):
+  def __init__(self, app, toplevel):
     """Construct the Help Window"""
     self._generate_icons()
-    self.main_window = control
-    self.app = self.main_window.app
-    self.root = master
+    self.window = toplevel
+    self.app = app
 
-    self.window = Toplevel(self.root)
     self.window.minsize(220,300)
     self.window.title("Alimaster | Help")
     self._setup_menu()

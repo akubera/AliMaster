@@ -17,7 +17,9 @@ from threading import Thread
 class MainWindow():
 
   def __init__(self, app):
-    '''Create the main 'control' window of the AliMaster program'''
+    """
+        Create the main 'control' window of the AliMaster program
+        """
     self.app = app
     self.root = app.root
 
@@ -74,10 +76,11 @@ class MainWindow():
 
   def create_filebrowser(self):
         fb_window = self.app.get_new_window("Alimaster Control", (220, 500))
-        FileBrowserWindow(self, fb_window)
+        FileBrowserWindow(self.app, fb_window)
 
   def create_helpwindow(self):
-    HelpWindow(self, self.root)
+        help_window = self.app.get_new_window("Alimaster Control", (220, 500))
+        HelpWindow(self, help_window)
 
   def set_status_bad(self):
     self.status_bar.status.configure(style = 'StatusBad.TLabel')

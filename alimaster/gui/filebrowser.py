@@ -9,9 +9,11 @@ from PIL import Image, ImageTk
 
 from . import RES
 
+from .window import Window
+
 from .fontawesome import FontAwesome
 
-class FileBrowserWindow():
+class FileBrowserWindow(Window):
 
   toolbar_icon_size = 16
 
@@ -23,18 +25,17 @@ class FileBrowserWindow():
   default_height = 480
   default_width = 640
 
-  def __init__(self, control, toplevel):
+  min_size = (220, 300)
+  title = "Alimaster File Browser"
+
+  def __init__(self, app, toplevel = None):
     """
         Construct a alimaster file browser inside the provided toplevel
+        @param app: The alimaster application the window communicates with
+        @param toplevel: a window provided to
         """
+    super().__init__(app, toplevel)
     self._generate_icons()
-    self.main_window = control
-    self.app = self.main_window.app
-    # self.root = master
-
-    self.window = toplevel #Toplevel(self.root)
-    self.window.minsize(220,300)
-    self.window.title("Alimaster File Browser")
     self._setup_menu()
 
     self.frame = Frame(self.window, **self.default_window)
@@ -68,13 +69,10 @@ class FileBrowserWindow():
     self.frame.pack(fill=BOTH, expand=True)
 
   def new_file(self):
-    pass
-
-  def quit(self):
-    pass
+        pass
 
   def set_status(self, msg= ''):
-    self.status.set(' ' + msg)
+        self.status.set(' ' + msg)
 
   def _setup_menu(self):
     self.menubar = Menu(self.window, relief='flat', tearoff='false')
@@ -84,7 +82,7 @@ class FileBrowserWindow():
 
     m_file.add_command(label='New', command=self.new_file)
     m_file.add_separator()
-    m_file.add_command(label="Quit", command= self.quit)
+    m_file.add_command(label="Close", command= self.close)
 
     m_edit = Menu(self.menubar, tearoff='false')
     m_edit.id = 'm_edit'
