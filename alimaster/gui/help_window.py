@@ -13,8 +13,9 @@ from PIL import Image, ImageTk
 from . import RES
 
 from .fontawesome import FontAwesome
+from .window import Window
 
-class HelpWindow():
+class HelpWindow(Window):
 
   toolbar_icon_size = 16
 
@@ -26,15 +27,14 @@ class HelpWindow():
   default_height = 480
   default_width = 640
 
+  title = "Alimaster | Help"
 
-  def __init__(self, app, toplevel):
+  def __init__(self, app, toplevel = None):
     """Construct the Help Window"""
-    self._generate_icons()
-    self.window = toplevel
-    self.app = app
+    super().__init__(app, toplevel)
 
-    self.window.minsize(220,300)
-    self.window.title("Alimaster | Help")
+    self._generate_icons()
+
     self._setup_menu()
 
     self.frame = Frame(self.window, **self.default_window)
