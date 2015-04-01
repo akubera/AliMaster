@@ -12,18 +12,25 @@ from .gui import create_window
 from tkinter import *
 from tkinter.ttk import *
 
+from .finder import Finder
+
 def main(args):
     """
     Main function called when using the root-selector as a standalone program.
     Creates a root_selector.gui.MainWindow and runs Tk
     """
 
-    # cfg = alimaster.load_config('root_selector')
-    # print (args)
-
     root = Tk()
     window = gui.create_window(root)
     alimaster.keep_tk_awake(root)
+
+
+    finder = Finder()
+    finder.Find("/opt/local")
+    finder.Find("/opt/alice/root")
+
+
     root.mainloop()
+
 
     return 0
