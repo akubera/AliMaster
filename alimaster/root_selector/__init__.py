@@ -24,12 +24,6 @@ def main(args):
     window = gui.create_window(root)
     alimaster.keep_tk_awake(root)
 
-
-    finder = Finder()
-    finder.Find("/opt/local")
-    finder.Find("/opt/alice/root")
-
-
     root.mainloop()
 
 
