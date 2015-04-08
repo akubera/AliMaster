@@ -17,31 +17,30 @@ from PIL import Image, ImageTk
 
 from alimaster.root_selector.finder import Finder
 from alimaster.gui.fontawesome import FontAwesome
+from alimaster.gui import SimpleWindow
 
-class MainWindow():
+class MainWindow(SimpleWindow):
 
     img_size = 16
 
-    search_img = FontAwesome.generate_icon('search', img_size)
+    imgs = {
+        'search': FontAwesome.generate_icon('search', img_size),
+    }
 
     def __init__(self, root):
         """
         Construct the main window of the root_selector program
         """
         print ("[MainWindow::__init__]")
-        self._generate_icons()
-        self.root = root
-        self.root.title("AliMaster | ROOT Selector")
-        self.root.protocol("WM_DELETE_WINDOW", self.stop_tk_root)
-        self.root.minsize(400,200)
+        super().__init__(root, "AliMaster | ROOT Selector", (400, 200))
 
-        self.frame = Frame(self.root)
-        self.frame.pack(fill=BOTH, expand=1)
+        search_img = self.imgs['search']
+        self.search_img = search_img
 
         self.aliroot_frame = Frame(self.frame)
 
         self.aliroot_search_button = Button(self.aliroot_frame,
-                                            image=self.search_img,
+                                            image=search_img,
                                             text='Search',
                                             command=self.search_for_aliroot)
         self.aliroot_search_button.pack(side=LEFT)
@@ -64,7 +63,7 @@ class MainWindow():
         self.root_frame = Frame(self.frame)
 
         self.root_search_button = Button(self.root_frame,
-                                         image=self.search_img,
+                                         image=search_img,
                                          text="Search",
                                          command=self.search_for_root,
                                          )
@@ -94,9 +93,6 @@ class MainWindow():
         # self.btn = Button(master , text = "Button" , command = self.command )
         # self.btn.pack()
         print ("[MainWindow::__init__] Done.")
-
-    def stop_tk_root(self):
-        self.root.after(0, self.root.quit)
 
     def command(self):
         print ('Button is pressed!')
@@ -179,8 +175,3 @@ class MainWindow():
 
     def set_selected_item(self):
         pass
-
-    @classmethod
-    def _generate_icons(cls):
-        if isinstance(cls.search_img, ImageTk.PhotoImage): return
-        cls.search_img = ImageTk.PhotoImage(cls.search_img)
