@@ -9,16 +9,28 @@ class Finder:
     Searches for root installations
     """
 
-    def find(self, path):
+    @classmethod
+    def find_root(cls, path):
+        """
+        Uses standard library os.walk to walk the path, looking for any
+        directories that contain the file 'root-config'. This is a generator.
+        """
         from glob import glob
         import os
         for root, dirnames, filenames in os.walk(path):
             if 'root-config' in filenames:
                 yield root
-            # print (dirnames)
-            # found = glob(path + "/**/root-config")
-        # print ("Found", found)
 
-    @asyncio.coroutine
-    def find_async(self, path):
-        yield from self.Find(path)
+    @classmethod
+    def find_aliroot(cls, path):
+        """
+        Uses standard library os.walk to walk the path, looking for any
+        directories that contain the executable file 'aliroot'. This is assumed
+        to be the 'bin' directory of the aliroot installation, and the parent
+        path is returned. This is a generator.
+        """
+        from glob import glob
+        import os
+        for root, dirnames, filenames in os.walk(path):
+            if 'aliroot' in filenames:
+                yield root
