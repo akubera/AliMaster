@@ -40,7 +40,10 @@ class MainWindow():
 
         self.aliroot_frame = Frame(self.frame)
 
-        self.aliroot_search_button = Button(self.aliroot_frame, image=self.search_img, text="Search", command=self.open_searchbox)
+        self.aliroot_search_button = Button(self.aliroot_frame,
+                                            image=self.search_img,
+                                            text='Search',
+                                            command=self.search_for_aliroot)
         self.aliroot_search_button.pack(side=LEFT)
 
         self.aliroot_lbl = Label(self.aliroot_frame , text="AliRoot")
@@ -60,7 +63,11 @@ class MainWindow():
 
         self.root_frame = Frame(self.frame)
 
-        self.root_search_button = Button(self.root_frame, image=self.search_img, text="Search", command=self.open_searchbox)
+        self.root_search_button = Button(self.root_frame,
+                                         image=self.search_img,
+                                         text="Search",
+                                         command=self.search_for_root,
+                                         )
         self.root_search_button.pack(side=LEFT)
 
         self.aliroot_lbl = Label(self.root_frame , text="ROOT")
@@ -74,13 +81,12 @@ class MainWindow():
         # self.rootlist.heading('owner', text='owner')
         self.rootlist.pack(fill=BOTH, expand=1, padx=4, pady=5)
 
-
-
-        self.use_button = Button(self.frame, text="Use", command=self.open_searchbox,state=DISABLED)
-        # self.use_button.state=DISABLED
+        self.use_button = Button(self.frame,
+                                 text="Use",
+                                 command=self.set_selected_item,
+                                 )
         self.use_button.state(["disabled"])
         self.use_button.pack(anchor='se')
-
 
         self.frame.pack()
 
@@ -98,13 +104,21 @@ class MainWindow():
         self.newWindow = tk.Toplevel(self.master)
         self.app = windowclass1(self.newWindow)
 
-    def open_searchbox(self):
+    def search_for_aliroot(self):
+        finder = Finder()
+        aliroot = self.open_searchbox(finder.find_aliroot)
+
+    def search_for_root(self):
+        finder = Finder()
+        self.open_searchbox(finder.find_root)
+
+    def open_searchbox(self, fcn=None):
         from tkinter import filedialog
         from queue import Queue
 
         d = filedialog.askdirectory()
         if not d:
-            return
+            return None
 
         # self.rootlist.insert('', 'end', 'ROOT', text=root_path)
 
@@ -114,9 +128,10 @@ class MainWindow():
         def threaded_find_roots():
             print ("Searching for ROOTs in path",d)
             # for x in range(4):
-            finder = Finder()
-            for root_path in finder.find(d):
-                # q.put(root_path)
+            if fcn is None:
+                fcn = Finder.find_root
+
+            for root_path in fcn(d):
                 meta = {}
                 exe = os.path.join(root_path,'root-config')
                 meta['rootsys'] = subprocess.check_output([exe, "--prefix"])
@@ -161,6 +176,9 @@ class MainWindow():
             except TclError:
                 pass
         print ('[insert_item] DONE')
+
+    def set_selected_item(self):
+        pass
 
     @classmethod
     def _generate_icons(cls):
