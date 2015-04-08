@@ -16,14 +16,20 @@ from tkinter.ttk import *
 from PIL import Image, ImageTk
 
 from alimaster.root_selector.finder import Finder
+from alimaster.gui.fontawesome import FontAwesome
 
 class MainWindow():
+
+    img_size = 16
+
+    search_img = FontAwesome.generate_icon('search', img_size)
 
     def __init__(self, root):
         """
         Construct the main window of the root_selector program
         """
         print ("[MainWindow::__init__]")
+        self._generate_icons()
         self.root = root
         self.root.title("AliMaster | ROOT Selector")
         self.root.protocol("WM_DELETE_WINDOW", self.stop_tk_root)
@@ -32,18 +38,43 @@ class MainWindow():
         self.frame = Frame(self.root)
         self.frame.pack(fill=BOTH, expand=1)
 
-        # self.lbl = Label(self.frame , text="ROOT Selector")
-        # self.lbl.pack(anchor='nw')
+        self.aliroot_frame = Frame(self.frame)
 
-        self.search_button = Button(self.frame, text="Search", command=self.open_searchbox)
-        self.search_button.pack()
+        self.aliroot_search_button = Button(self.aliroot_frame, image=self.search_img, text="Search", command=self.open_searchbox)
+        self.aliroot_search_button.pack(side=LEFT)
+
+        self.aliroot_lbl = Label(self.aliroot_frame , text="AliRoot")
+        self.aliroot_lbl.pack(side=LEFT)
+        self.aliroot_frame.pack(side=TOP, fill=X, pady=(6,0), padx=8)
+
+        self.alirootlist = Treeview(self.frame)
+        self.alirootlist['columns'] = ('version')
+        # , 'modified', 'owner')
+        self.alirootlist.heading('#0', text='Path')
+        self.alirootlist.heading('version', text='version')
+        # self.rootlist.heading('owner', text='owner')
+        self.alirootlist.pack(fill=BOTH, expand=1, padx=4, pady=5)
+
+        sep = Separator(self.frame, orient=HORIZONTAL)
+        sep.pack(fill=X, padx=10)
+
+        self.root_frame = Frame(self.frame)
+
+        self.root_search_button = Button(self.root_frame, image=self.search_img, text="Search", command=self.open_searchbox)
+        self.root_search_button.pack(side=LEFT)
+
+        self.aliroot_lbl = Label(self.root_frame , text="ROOT")
+        self.aliroot_lbl.pack(side=LEFT)
+        self.root_frame.pack(side=TOP, fill=X, pady=(6,0), padx=8)
 
         self.rootlist = Treeview(self.frame)
+        self.rootlist.heading('#0', text='ROOTSYS')
         self.rootlist['columns'] = ('version') # , 'modified', 'owner')
-        # self.rootlist.heading('', text='path')
         self.rootlist.heading('version', text='version')
         # self.rootlist.heading('owner', text='owner')
-        self.rootlist.pack(fill=BOTH, expand=1, padx=2, pady=3)
+        self.rootlist.pack(fill=BOTH, expand=1, padx=4, pady=5)
+
+
 
         self.use_button = Button(self.frame, text="Use", command=self.open_searchbox,state=DISABLED)
         # self.use_button.state=DISABLED
@@ -88,10 +119,11 @@ class MainWindow():
                 # q.put(root_path)
                 meta = {}
                 exe = os.path.join(root_path,'root-config')
+                meta['rootsys'] = subprocess.check_output([exe, "--prefix"])
                 meta['version'] = subprocess.check_output([exe, "--version"])
                 meta['features'] = subprocess.check_output([exe, "--features"])
                 # print ('found root path:', root_path)
-                self.insert_item(root_path, meta)
+                self.insert_item(meta['rootsys'], meta)
                 print ("GOOD")
                 # yield from asyncio.sleep(1)
                 # self.rootlist.insert('','end',x, text=x )
@@ -113,7 +145,7 @@ class MainWindow():
         # label.pack()
         # searchframe.pack()
 
-    def insert_item(self, item, extras=[]):
+    def insert_item(self, item, extras={}):
         from _tkinter import TclError
         key = self.rootlist.insert('', 'end', text=item)
         newitem = self.rootlist.item(key)
@@ -129,3 +161,8 @@ class MainWindow():
             except TclError:
                 pass
         print ('[insert_item] DONE')
+
+    @classmethod
+    def _generate_icons(cls):
+        if isinstance(cls.search_img, ImageTk.PhotoImage): return
+        cls.search_img = ImageTk.PhotoImage(cls.search_img)
