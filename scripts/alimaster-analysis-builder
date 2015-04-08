@@ -1,0 +1,14 @@
+#!/usr/bin/env python3
+#
+# alimaster-analysis-builder
+#
+"""
+A launcher script for the analysis_builder subpackage of alimaster
+"""
+
+import sys
+
+from alimaster.analysis_builder import main
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))

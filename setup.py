@@ -3,6 +3,7 @@
 #
 
 import os
+from glob import glob
 from setuptools import (setup, find_packages)
 from importlib.machinery import SourceFileLoader
 
@@ -17,11 +18,7 @@ EXTRAS = {
 
 PACKAGES = find_packages(exclude=['tests'])
 
-SCRIPTS = [
-    'scripts/alianalysisbuilder',
-    'scripts/alimaster',
-    'scripts/alimaster-root-selector'
-]
+SCRIPTS = glob('scripts/*')
 
 CLASSIFIERS = [
     "Development Status :: 2 - Pre-Alpha",
