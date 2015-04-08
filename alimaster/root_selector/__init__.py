@@ -9,22 +9,6 @@ import alimaster
 # import gui as gui
 from .gui import create_window
 
-from tkinter import *
-from tkinter.ttk import *
-
 from .finder import Finder
 
-def main(args):
-    """
-    Main function called when using the root-selector as a standalone program.
-    Creates a root_selector.gui.MainWindow and runs Tk
-    """
-
-    root = Tk()
-    window = gui.create_window(root)
-    alimaster.keep_tk_awake(root)
-
-    root.mainloop()
-
-
-    return 0
+from alimaster.root_selector.__main__ import main
