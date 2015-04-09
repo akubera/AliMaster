@@ -17,6 +17,11 @@ def get_style():
     style.theme_create("alimaster", parent='alt', settings=style_theme)
     return style
 
+def use_alimaster_style():
+    style = get_style()
+    style.theme_use('alimaster')
+    return style
+
 style_theme = {
     "." : {
         "configure": {
@@ -30,14 +35,27 @@ style_theme = {
         }
     },
 
+    "Wizard.TNotebook": {
+        "configure": {
+            "padding": [10,4]
+        }
+    },
+
     "TNotebook.Tab": {
         "configure": {
             "padding": [5, 1]
         }
     },
+
     "alienwindow.TFrame" : {
         "configure": {
             "padding": [5, 1]
+        }
+    },
+
+    "Heading.TLabel" : {
+        "configure": {
+            'font': ('DejaVu Mono', 18)
         }
     },
 
