@@ -25,7 +25,7 @@ class MainWindow(SimpleWindow):
         'save': FontAwesome.generate_icon('search', img_size)
     }
 
-    def __init__(self, root):
+    def __init__(self, builder, root):
         """
         Construct the analysis builder window.
 

@@ -7,3 +7,4 @@ creating analysis scripts for use with an AliAnalysis
 """
 
 from alimaster.analysis_builder.__main__ import main
+from alimaster.analysis_builder.alianalysis_builder import AliAnalysisBuilder
