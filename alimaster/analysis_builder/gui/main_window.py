@@ -11,8 +11,9 @@ from alimaster.gui import SimpleWindow
 
 from tkinter import *
 from tkinter.ttk import *
-
 from PIL import Image, ImageTk
+
+from .new_project_wizard import NewProjectWizard
 
 class MainWindow(SimpleWindow):
     """
@@ -48,10 +49,14 @@ class MainWindow(SimpleWindow):
             Button(self.toolbar,
                    style='Toolbar.TButton',
                    image=self.imgs[img_name],
-                   command=lambda:print(img_name)if command is None else command).pack(side=LEFT, padx=0, pady=2)
+                       command=(lambda:print(img_name)) if command is None else command).pack(side=LEFT, padx=0, pady=2)
 
-        add_button('new_project')
-        Separator(self.toolbar,orient=VERTICAL).pack(side=LEFT, padx=1, pady=4, fill=Y)
+        def add_separator():
+            Separator(self.toolbar,
+                      orient=VERTICAL).pack(side=LEFT, padx=1, pady=4, fill=Y)
+
+        add_button('new_project', self.create_new_project_wizard)
+        add_separator()
         add_button('new')
         add_button('open')
         add_button('save')
@@ -68,3 +73,8 @@ class MainWindow(SimpleWindow):
         self.set_status = self.status.set
         self.set_status("")
         self.statusbar.pack(side=BOTTOM, fill=X, expand=0, pady=1)
+
+    def create_new_project_wizard(self):
+        def cb():
+            print("[create_new_project_wizard] callback")
+        NewProjectWizard(Toplevel(self.window), cb)

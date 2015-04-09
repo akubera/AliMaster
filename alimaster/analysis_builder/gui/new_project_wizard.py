@@ -12,19 +12,19 @@ from alimaster.gui.style import use_alimaster_style
 
 class NewProjectWizard(Notebook):
 
-    def __init__(self, master=None, **kw):
+    def __init__(self, master=None, callback=None, **kw):
         """
         Construct a NewProjectWizard.
         @param master: A Toplevel for which to place the wizard
         @param **kw: Keywords for the Notebook
         """
+        self.on_finish = callback
         self.master_frame = Frame(master)
         self.label = Label(self.master_frame,
             text='New Project Wizard',
             style='Heading.TLabel'
             )
         self.label.pack(fill=X, pady=(12,0), padx=24)
-
         self.args = {
             'name': StringVar(),
             'author': StringVar(),
