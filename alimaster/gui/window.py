@@ -33,10 +33,10 @@ class Window(SimpleWindow):
         self.window = toplevel
 
     def close(self):
-        self.toplevel.close()
+        self.window.destroy()
 
     def hide(self):
-        self.toplevel.hide()
+        self.window.hide()
 
     def on_focus(self, ev):
         """Dummy function to give all windows an 'on_focus' event"""

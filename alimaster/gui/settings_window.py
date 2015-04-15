@@ -13,13 +13,35 @@ from .window import Window
 class SettingsWindow(Window):
 
     title = "Settings | AliMaster"
-    default_window = {'width':640, 'height':480}
+    min_size = (500, 200)
 
     def __init__(self, app, mainwindow=None):
         """
         Construct the settings window
         """
         super().__init__(app, mainwindow)
-        self.frame = Frame(self.window, **self.default_window)
-        self.frame.pack_propagate(0)
-        self.frame.pack(fill=BOTH, expand=True)
+        self.xframe = Frame(self.frame)
+        self.tree_view = Treeview(self.xframe)
+        self.tree_view.pack(fill=Y, side=LEFT, padx=6, pady=6)
+        self.tabbed_view = Notebook(self.xframe)
+        self.tabbed_view.pack(fill=BOTH, side=RIGHT, expand=2, padx=6, pady=6)
+
+        self.xframe.pack(fill=BOTH, expand=1)
+        # self.add_tab("General")
+
+        self.button_frame = Frame(self.frame)
+        Button(self.button_frame,
+               text="SAVE",
+               command=self.save_settings,
+               ).pack(side=RIGHT, padx=6, pady=(0,4))
+        Button(self.button_frame,
+               text="CANCEL",
+               command=self.close
+               ).pack(side=RIGHT, pady=(0,4))
+        self.button_frame.pack(side=BOTTOM, fill=X)
+
+    def save_settings(self):
+        print("Saving settings...")
+
+    def add_tab(self, name):
+        self.tabbed_view.add(None, text=name)
