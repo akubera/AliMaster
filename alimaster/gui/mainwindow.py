@@ -23,7 +23,7 @@ class MainWindow():
 
     If there are other child windows open, the MainWindow will not close, but
     minimize to taskbar.
-    """"
+    """
 
     def __init__(self, app):
         """
@@ -51,45 +51,60 @@ class MainWindow():
 
         self.status_bar.label = Label(self.status_bar,
                                       text="Status"
-                                      ).pack(side=LEFT)
+                                      )
+        self.status_bar.label.pack(side=LEFT)
 
         self.status_bar.status = Label(self.status_bar,
                                        text="●"
-                                       ).pack()
+                                       )
+        self.status_bar.status.pack()
 
         self.label = Label(self.frame,
                            text="AliMaster v%s" % (__version__),
                            font=('DejaVu Mono', 16)
-                           ).pack(pady=9, padx=4)
+                           )
+        self.label.pack(pady=9, padx=4)
 
         self.status_bar.pack(fill=X, pady=(9, 3), padx=4)
 
-        self.file_browser_button = Button(self.frame,
-                                          text="File Browser",
-                                          command=self.create_filebrowser
-                                          ).pack(fill=X, pady=(9, 3), padx=4)
+        self.add_button('File Browser',
+                        self.create_filebrowser,
+                        fill=X,
+                        pady=(9, 3),
+                        padx=4)
 
-        self.settings_button = Button(self.frame,
-                                      text="Settings",
-                                      command=self.create_settings_window
-                                      ).pack(fill=X, pady=(9, 3), padx=4)
+        self.add_button('Settings',
+                        self.create_settings_window,
+                        fill=X,
+                        pady=(9, 3),
+                        padx=4)
 
-        self.help_button = Button(self.frame,
-                                  text="Help",
-                                  command=self.create_helpwindow
-                                  ).pack(fill=X, pady=(9, 3), padx=4)
+        self.add_button('Help',
+                        self.create_helpwindow,
+                        fill=X,
+                        pady=(9, 3),
+                        padx=4)
 
-        self.load_button = Button(self.frame,
-                                  text="Load ROOT",
-                                  command=self.load_root
-                                  ).pack(fill=X, pady=(3, 3), padx=4)
-        self.quit_button = Button(self.frame,
-                                  text="Quit",
-                                  command=self.app.quit
-                                  ).pack(fill=X, pady=(3, 9), padx=4)
+        self.add_button("Load ROOT",
+                        self.load_root,
+                        fill=X,
+                        pady=(3, 3),
+                        padx=4)
+
+        self.add_button("Quit",
+                        self.app.quit,
+                        fill=X,
+                        pady=(3, 9),
+                        padx=4)
 
         self.set_status_good()
         self.frame.pack(fill=BOTH, expand=1)
+
+    def add_button(self, text, command, **pack_args):
+        Button(self.frame,
+               text=text,
+               command=command
+               ).pack(**pack_args)
 
     def quit(self):
         print("[MainWindow::quit]")
