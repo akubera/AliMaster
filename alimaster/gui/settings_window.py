@@ -5,6 +5,9 @@
 A GUI window for managing user settings.
 """
 
+from tkinter import *
+from tkinter.ttk import *
+
 from .window import Window
 
 class SettingsWindow(Window):
