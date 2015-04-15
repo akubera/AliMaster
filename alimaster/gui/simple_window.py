@@ -43,7 +43,7 @@ class SimpleWindow():
         self.frame = Frame(self.root)
         self.frame.pack(fill=BOTH, expand=1)
 
-        self.on_focus = lambda: True
+        self.on_focus = lambda event: True
 
         self.root.bind("<FocusIn>", self._on_focus)
 
