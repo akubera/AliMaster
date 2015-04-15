@@ -8,6 +8,7 @@ from tkinter.ttk import *
 from alimaster import __version__
 from .filebrowser import FileBrowserWindow
 from .help_window import HelpWindow
+from .settings_window import SettingsWindow
 
 import alimaster
 
@@ -46,13 +47,25 @@ class MainWindow():
     self.label = Label(self.frame, text="AliMaster v%s" % (__version__), font=('DejaVu Mono', 16)).pack(pady=9, padx=4)
     self.status_bar.pack(fill=X, pady=(9,3), padx=4)
 
-    self.help = Button(self.frame, text="Help", command=self.create_helpwindow)
+    self.file_browser_button = Button(self.frame,
+                                      text="File Browser",
+                                      command=self.create_filebrowser)
+    self.file_browser_button.pack(fill=X, pady=(9,3), padx=4)
+
+
+    self.settings_button = Button(self.frame,
+                                  text="Settings",
+                                  command=self.create_settings_window)
+    self.settings_button.pack(fill=X, pady=(9,3), padx=4)
+
+    self.help_button = Button(self.frame,
+                              text="Help",
+                              command=self.create_helpwindow)
+
     self.load = Button(self.frame, text="Load ROOT", command=self.load_root)
     self.quit = Button(self.frame, text="Quit", command=self.app.quit)
-    self.file_browser = Button(self.frame, text="File Browser", command=self.create_filebrowser)
 
-    self.file_browser.pack(fill=X, pady=(9,3), padx=4)
-    self.help.pack(fill=X, pady=(9,3), padx=4)
+    self.help_button.pack(fill=X, pady=(9,3), padx=4)
     self.load.pack(fill=X, pady=(3,3), padx=4)
     self.quit.pack(fill=X, pady=(3,9), padx=4)
     self.set_status_good()
@@ -81,12 +94,15 @@ class MainWindow():
   def create_helpwindow(self):
         HelpWindow(self.app)
 
+  def create_settings_window(self):
+        SettingsWindow(self.app)
+
   def set_status_bad(self):
-    self.status_bar.status.configure(style = 'StatusBad.TLabel')
+    self.status_bar.status.configure(style='StatusBad.TLabel')
 
   def set_status_good(self):
     from .style import style
-    self.status_bar.status.configure(style = 'StatusGood.TLabel')
+    self.status_bar.status.configure(style='StatusGood.TLabel')
 
   def run_in_thread():
     pass
