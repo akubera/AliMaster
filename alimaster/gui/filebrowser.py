@@ -21,7 +21,7 @@ class FileBrowserWindow(Window):
     imgs = {
         "larrow": FontAwesome.generate_icon('chevron-left', tb_icon_size),
         "rarrow": FontAwesome.generate_icon('chevron-right', tb_icon_size),
-        "home":   FontAwesome.generate_icon('home', tb_icon_size),
+        "home": FontAwesome.generate_icon('home', tb_icon_size),
         "folder": FontAwesome.generate_icon('folder', 12)
     }
 

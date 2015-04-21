@@ -190,12 +190,12 @@ class SettingsWindow(Window):
             cert = crypto.load_certificate(crypto.FILETYPE_PEM, pub.read())
             issuer = cert.get_issuer()
             print(cert)
-            f = LabelFrame(info_frame, text='Server', relief='groove')
+            f = LabelFrame(info_frame, text='Certificate', relief='groove')
 
-            X = next_rc()
+            an_rc = next_rc()
 
             def rc():
-                return next(X)
+                return next(an_rc)
 
             for component in issuer.get_components():
                 k, v = component
@@ -220,16 +220,16 @@ class SettingsWindow(Window):
             expires = strftime("%b %d, %Y", strptime(expires[:8], '%Y%m%d'))
             # expires = strftime(expires
             Label(f, text=expires).grid(**rc())
-            f.pack(side=LEFT, fill='y', padx=20)
+            f.pack(fill=X, padx=20)
 
             c = LabelFrame(info_frame, text='User', relief='groove')
-            X = next_rc()
+            an_rc = next_rc()
             for k, v in cert.get_subject().get_components():
                 Label(c, text=k.decode() + ':').grid(**rc())
                 Label(c, text=v.decode()).grid(**rc())
-            c.pack(side=LEFT, fill='y', padx=20)
+            c.pack(fill=X, padx=20)
 
-        info_frame.pack(fill=Y)
+        info_frame.pack(fill=BOTH)
 
 
 
