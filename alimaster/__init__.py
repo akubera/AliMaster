@@ -2,34 +2,49 @@
 # alimaster/__init__.py
 #
 #
-"""# AliMaster
-AliMaster intends to be a utility for managing files and jobs on
-CERN's grid through AliMonitor. It currently uses the commands provided by the AliEn
-software package. Perhaps one day there will be python bindings to the services, but until
-then, AliEn (and AliROOT, for that matter) should be installed before AliMaster (to do so,
-follow the guide at https://dberzano.github.io/alice/install-aliroot.
 """
-import os, sys
-from importlib.machinery import SourceFileLoader
+AliMaster intends to be a utility for managing files and jobs on CERN's grid
+through AliMonitor. It currently uses the commands provided by the AliEn
+software package. Perhaps one day there will be python bindings to the
+services, but until then, AliEn (and AliROOT, for that matter) should be
+installed before AliMaster (to do so, follow the guide at
+https://dberzano.github.io/alice/install-aliroot.
+"""
+
+import os
+import sys
 from os import path
+from importlib.machinery import SourceFileLoader
 
-# from alimaster import metdata
-# ospath =
-metadata = SourceFileLoader("metadata", path.join(path.dirname(__file__),"metadata.py")).load_module()
+metafile = path.join(path.dirname(__file__), "metadata.py")
+metadata = SourceFileLoader("metadata", metafile).load_module()
 
-__version__   = metadata.version
-__author__    = metadata.author
-__date__      = metadata.date
+__version__ = metadata.version
+__author__ = metadata.author
+__date__ = metadata.date
 __copyright__ = metadata.copyright
-__license__   = metadata.license
+__license__ = metadata.license
 
-__all__ = ['__version__', '__author__']
 
 def LOCAL(f):
-  return path.join(path.dirname(__file__), f)
+    return path.join(path.dirname(__file__), f)
+
 
 def RES(f):
-  return LOCAL(path.join('res', f))
+    return LOCAL(path.join('res', f))
+
+
+from .gui.mainwindow import MainWindow              # noqa
+from alimaster.application import Application       # noqa
+from .alicommunicator import AliCommunicator        # noqa
+
+__all__ = [
+    '__version__',
+    '__author__'
+]
+
+_root_load_callbacks = []
+
 
 def load_config(file):
     """
@@ -48,10 +63,11 @@ def load_config(file):
     conf_file = path.join(alimaster_conf, file)
     return open(conf_file, 'r+')
 
+
 def keep_tk_awake(tk_root):
     tk_root.after(1, lambda *args: keep_tk_awake(tk_root))
 
-_root_load_callbacks = []
+
 def on_root_import(func):
     """
     Once the ROOT module is loaded, run func. This runnable is stored in a list
@@ -66,13 +82,14 @@ def on_root_import(func):
     else:
         func()
 
+
 def import_root_module():
     global _root_load_callbacks
-    print ("Importing ROOT module", end='... ')
+    print("Importing ROOT module", end='... ')
     import ROOT
-    print ("Done.")
+    print("Done.")
     gROOT = ROOT.gROOT
-    print ("""===================
+    print("""===================
       ROOT
 ~~~~~~~~~~~~~~~~~~~
  Version: {}
@@ -84,18 +101,11 @@ def import_root_module():
   Libraries: {}
 ===================""".format(gROOT.GetVersion(),
                               gROOT.GetVersionDate(),
-                               ROOT.__file__,
-                               hasattr(ROOT, 'TMinuit'),
-                               hasattr(ROOT, 'TAlien'),
-                               hasattr(ROOT, 'TThread'),
-                               ROOT.gSystem.GetLibraries()
-                             ))
+                              ROOT.__file__,
+                              hasattr(ROOT, 'TMinuit'),
+                              hasattr(ROOT, 'TAlien'),
+                              hasattr(ROOT, 'TThread'),
+                              ROOT.gSystem.GetLibraries()
+                              ))
 
     [func() for func in _root_load_callbacks]
-
-from .gui.mainwindow import MainWindow
-from alimaster.application import Application
-
-from .alicommunicator import AliCommunicator
-
-# import aliroot
