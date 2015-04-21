@@ -1,6 +1,9 @@
 #
 # setup.py
 #
+"""
+A (non-web) graphic user interface for interacting with AliMonitor
+"""
 
 import os
 from setuptools import (setup, find_packages)
@@ -37,8 +40,6 @@ CLASSIFIERS = [
     "Natural Language :: English"
 ]
 
-desc = "A (non-web) graphic user interface for interacting with AliMonitor"
-
 setup(
     name=metadata.package,
     version=metadata.version,
@@ -46,7 +47,7 @@ setup(
     author_email=metadata.author_email,
     url=metadata.url,
     license=metadata.license,
-    description=desc,
+    description=__doc__.strip(),
     packages=PACKAGES,
     scripts=SCRIPTS,
     install_requires=REQUIRES,
