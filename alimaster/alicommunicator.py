@@ -4,13 +4,14 @@
 
 import asyncio
 
+
 class AliCommunicator():
   """
   The AliCommunicator provides a simple interface for sending and retrieving messages
   to the ALICE grid.
   """
 
-  def __init__(self, loop = None, run_forever=True):
+  def __init__(self, loop=None, run_forever=True):
     """
     Creates a communicator.
 
@@ -26,7 +27,7 @@ class AliCommunicator():
     if run_forever:
       self.run_forever()
     else:
-      self._start() 
+      self._start()
 
   @asyncio.coroutine
   def run(self, args):

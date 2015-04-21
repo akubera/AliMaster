@@ -11,9 +11,9 @@ from tkinter.ttk import *
 from PIL import Image, ImageTk
 
 from . import RES
-
 from .fontawesome import FontAwesome
 from .window import Window
+
 
 class HelpWindow(Window):
 
