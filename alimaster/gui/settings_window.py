@@ -11,6 +11,7 @@ from tkinter.messagebox import showerror
 
 from .window import Window
 
+
 class SettingsWindow(Window):
 
     title = "Settings | AliMaster"
@@ -116,16 +117,14 @@ class SettingsWindow(Window):
         def on_password(pas):
             password_prompt.destroy()
             password = pas.get().encode()
-            print("PASSWORD: ", password)
 
             try:
                 p12 = crypto.load_pkcs12(open(cerfile, 'rb').read(), password)
             except crypto.Error as e:
                 print(e)
-                print(dir(e))
                 print(e.args[0])
                 # for x in dir(e):
-                    # print(x, e.__getattribute__(x))
+                # print(x, e.__getattribute__(x))
                 messagebox.showerror("Bad Password",
                                      "Error reading file:\n %s" % e)
                 return
@@ -163,7 +162,6 @@ class SettingsWindow(Window):
                command=lambda: password_prompt.destroy()).pack(side=BOTTOM)
         p_frame.pack(fill=BOTH, expand=1)
 
-
     def update_certificate_info(self):
         from os import path
         from OpenSSL import crypto
@@ -178,7 +176,7 @@ class SettingsWindow(Window):
         def next_rc():
             row, column = 0, 0
             while True:
-                for column in range(0,2):
+                for column in range(0, 2):
                     yield {
                         'row': row,
                         'column': column,
@@ -189,7 +187,6 @@ class SettingsWindow(Window):
         with open(pubname, 'r') as pub:
             cert = crypto.load_certificate(crypto.FILETYPE_PEM, pub.read())
             issuer = cert.get_issuer()
-            print(cert)
             f = LabelFrame(info_frame, text='Certificate', relief='groove')
 
             an_rc = next_rc()
@@ -197,13 +194,11 @@ class SettingsWindow(Window):
             def rc():
                 return next(an_rc)
 
-            for component in issuer.get_components():
-                k, v = component
-                print(k, v)
+            for k, v in issuer.get_components():
                 Label(f, text=k.decode() + ':').grid(**rc())
                 Label(f, text=v.decode()).grid(**rc())
 
-            row=len(issuer.get_components())
+            row = len(issuer.get_components())
             Label(f, text="SN:").grid(**rc())
             Label(f, text=cert.get_serial_number()).grid(**rc())
 
@@ -230,7 +225,3 @@ class SettingsWindow(Window):
             c.pack(fill=X, padx=20)
 
         info_frame.pack(fill=BOTH)
-
-
-
-        # Label(aframe.cert_frame.info_frame, text="IT WORKS").pack()
