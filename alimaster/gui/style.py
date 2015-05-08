@@ -2,12 +2,13 @@
 # alimaster/gui/style.py
 #
 
-from tkinter import *
-from tkinter.ttk import *
+from tkinter import *      # noqa
+from tkinter.ttk import *  # noqa
 
 from .fontawesome import _font_16 as fontawesome
 
 style = None
+
 
 def get_style():
     global style, style_theme
@@ -18,13 +19,13 @@ def get_style():
     return style
 
 style_theme = {
-    "." : {
+    ".": {
         "configure": {
-          # "font": ('Helvetica', 50)
+            # "font": ('Helvetica', 50)
         }
     },
 
-    "TNotebook" : {
+    "TNotebook": {
         "configure": {
             "tabmargins": [2, 5, 2, 0]
         }
@@ -35,19 +36,19 @@ style_theme = {
             "padding": [5, 1]
         }
     },
-    "alienwindow.TFrame" : {
+    "alienwindow.TFrame": {
         "configure": {
             "padding": [5, 1]
         }
     },
 
-    "StatusGood.TLabel" : {
+    "StatusGood.TLabel": {
         "configure": {
             "foreground": "green"
         }
     },
 
-    'StatusBad.TLabel' : {
+    'StatusBad.TLabel': {
         'configure': {
             'foreground': 'red'
         }
@@ -69,8 +70,8 @@ style_theme = {
     'TButton': {
         'configure': {
             'relief': 'raised',
-            'cursor':'help',
-            'anchor':'center',
+            'cursor': 'help',
+            'anchor': 'center',
             'padding': 3
         },
         'map': {

@@ -2,12 +2,8 @@
 # alimaster/gui/filebrowser.py
 #
 
-from tkinter import *
-from tkinter.ttk import *
-
-from PIL import Image, ImageTk
-
-from . import RES
+from tkinter import *      # noqa
+from tkinter.ttk import *  # noqa
 
 from .window import Window
 
@@ -55,10 +51,13 @@ class FileBrowserWindow(Window):
                                     )
 
         self.locationbox.bind('<Return>',
-                              lambda ev: print("[RETURN]", ev.widget.get()))
+                              lambda ev:
+                                  print("[RETURN]", ev.widget.get())
+                              )
 
         self.locationbox.bind('<<ComboboxSelected>>',
-                              lambda ev: print("EVENT", ev))
+                              lambda ev:
+                                  print("EVENT", ev))
 
         self.locationbox.pack(side=TOP, fill=X, padx=8, pady=3, expand=0)
         self.location_var.set('~')

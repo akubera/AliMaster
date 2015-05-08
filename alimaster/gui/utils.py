@@ -7,6 +7,7 @@ Miscellaneous functions for gui tasks
 
 from os import path
 
+
 def RES(filename):
     """
     Return absolute path to resource file with name 'filename'.

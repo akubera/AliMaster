@@ -7,6 +7,7 @@ Provides base window class for alimaster
 
 from .simple_window import SimpleWindow
 
+
 class Window(SimpleWindow):
     """
     A base class for handling the construction of alimaster gui-windows.

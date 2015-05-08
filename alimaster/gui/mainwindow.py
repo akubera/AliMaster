@@ -2,8 +2,8 @@
 # alimaster/gui/mainwindow.py
 #
 
-from tkinter import *
-from tkinter.ttk import *
+from tkinter import *      # noqa
+from tkinter.ttk import *  # noqa
 
 from alimaster import __version__
 from .filebrowser import FileBrowserWindow
@@ -11,9 +11,6 @@ from .help_window import HelpWindow
 from .settings_window import SettingsWindow
 
 import alimaster
-
-import threading
-from threading import Thread
 
 
 class MainWindow():

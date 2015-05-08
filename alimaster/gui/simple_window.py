@@ -5,11 +5,8 @@
 Defines a 'simple_window' which should be subclassed to a specific window.
 """
 
-from tkinter import *
-from tkinter.ttk import *
-
-from PIL import Image, ImageTk
-from alimaster.gui.fontawesome import FontAwesome
+from tkinter import *      # noqa
+from tkinter.ttk import *  # noqa
 
 
 class SimpleWindow():
@@ -32,7 +29,11 @@ class SimpleWindow():
                  root,
                  title,
                  minsize=(400, 200),
-                 auto_close_window=True):
+                 auto_close_window=True
+                 ):
+        """
+        Construct Simple Window
+        """
         self._generate_icons()
         self.root = root
         self.root.title(title)
@@ -58,7 +59,6 @@ class SimpleWindow():
         if event.widget is not self.window:
             return
         self.on_focus(event)
-
 
     @classmethod
     def _generate_icons(cls):

@@ -5,9 +5,9 @@
 A GUI window for managing user settings.
 """
 
-from tkinter import *
-from tkinter.ttk import *
-from tkinter.messagebox import showerror
+from tkinter import *      # noqa
+from tkinter.ttk import *  # noqa
+# from tkinter.messagebox import showerror
 
 from .window import Window
 
@@ -198,7 +198,6 @@ class SettingsWindow(Window):
                 Label(f, text=k.decode() + ':').grid(**rc())
                 Label(f, text=v.decode()).grid(**rc())
 
-            row = len(issuer.get_components())
             Label(f, text="SN:").grid(**rc())
             Label(f, text=cert.get_serial_number()).grid(**rc())
 
