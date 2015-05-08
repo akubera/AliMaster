@@ -17,4 +17,4 @@ copyright = "Copyright 2015, Andrew Kubera"
 date = "Mar 30, 2015"
 
 license = "LGPLv3+"
-url  = 'http://github.com/akubera/AliMaster'
+url = 'http://github.com/akubera/AliMaster'

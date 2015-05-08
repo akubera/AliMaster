@@ -2,8 +2,9 @@
 # alimaster/application.py
 #
 
-from tkinter import *
-from tkinter.ttk import *
+from tkinter import *      # noqa
+from tkinter.ttk import *  # noqa
+
 from PIL import Image, ImageTk
 
 import threading
