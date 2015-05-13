@@ -1,6 +1,8 @@
 #
 # alimsater/gui/fontawesome.py
 #
+# flake8: noqa
+#
 """
 Tools for using the FontAwesome in ttk applications
 """
@@ -9,10 +11,11 @@ from alimaster import RES
 
 from PIL import ImageFont
 
-def get_font(size):
-  return ImageFont.truetype(RES("fontawesome.ttf"), size)
 
-_font    = get_font(1000)
+def get_font(size):
+    return ImageFont.truetype(RES("fontawesome.ttf"), size)
+
+_font = get_font(1000)
 _font_16 = get_font(16)
 
 
@@ -535,44 +538,52 @@ ICONS = {     "adjust" : "\uf042",
       "youtube-square" : "\uf166"
 }
 
+
 class FontAwesome:
-  
-  texture_cache = dict()
-  
-  def __init__(self):
-    pass
-    
-  @classmethod
-  def get_image(cls, name):
-    from PIL import (Image, ImageDraw)
-    if not name in cls.texture_cache:
-      img = Image.new("RGBA", (1000,1000))
-      try:
-        ImageDraw.Draw(img).text((0, 0), ICONS[name], (0,0,0), font=_font)
-      except NameError as e:
-        import sys
-        print ("Error: Could not find icon with name '%s'." % name, file=sys.stderr)
-        raise e
-    else:
-      img = cls.texture_cache[name]
-    return img
 
-  @classmethod
-  def generate_icon(cls, name, size):
-    from PIL import (Image)
-    img = cls.get_image(name)
-    return img.resize((size, size), Image.ANTIALIAS)
+    texture_cache = dict()
 
-  @classmethod
-  def get_font(cls, size):
-    return get_font(size)
+    def __init__(self):
+        pass
+
+    @classmethod
+    def get_image(cls, name):
+        from PIL import (Image, ImageDraw)
+        if name not in cls.texture_cache:
+            img = Image.new("RGBA", (1000, 1000))
+            try:
+                ImageDraw.Draw(img).text(
+                    (0, 0),
+                    ICONS[name],
+                    (0, 0, 0),
+                    font=_font)
+            except NameError as e:
+                import sys
+                err_str = "Error: Could not find icon with name '%s'." % name
+                print(err_str, file=sys.stderr)
+                raise e
+        else:
+            img = cls.texture_cache[name]
+        return img
+
+    @classmethod
+    def generate_icon(cls, name, size):
+        from PIL import (Image)
+        img = cls.get_image(name)
+        return img.resize((size, size), Image.ANTIALIAS)
+
+    @classmethod
+    def get_font(cls, size):
+        return get_font(size)
+
 
 def _parse_cheatsheet():
-  """Downloads the cheatsheet"""
-  from urllib.request import urlopen
-  import re
-  html = urlopen("http://fortawesome.github.io/Font-Awesome/cheatsheet").read().decode()
-  regex = 'fa-([a-z\-]+)\s*<span class="muted">\s*\[&amp;#x([a-z0-9]+);\]'
-  pairs = ['{0:>22} : "\\u{1}"'.format('"%s"' % x[0], x[1]) for x in re.findall(regex, html)]
-  return ',\n'.join(pairs)
-
+    """Downloads the cheatsheet"""
+    from urllib.request import urlopen
+    import re
+    font_awesome_url = "http://fortawesome.github.io/Font-Awesome/cheatsheet"
+    html = urlopen(font_awesome_url).read().decode()
+    regex = 'fa-([a-z\-]+)\s*<span class="muted">\s*\[&amp;#x([a-z0-9]+);\]'
+    pairs = ['{0:>22} : "\\u{1}"'.format('"%s"' % x[0], x[1])
+             for x in re.findall(regex, html)]
+    return ',\n'.join(pairs)

@@ -2,9 +2,9 @@
 #
 # run.py
 #
-'''
+"""
 Run this script to start the program.
-'''
+"""
 
 import alimaster
 
