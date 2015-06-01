@@ -2,13 +2,14 @@
 # alimaster/analysis_builder/gui/new_project_wizard.py
 #
 
-from tkinter import *
-from tkinter.ttk import *
-import tkinter.ttk as ttk
+
+from tkinter import *       # noqa
+from tkinter.ttk import *   # noqa
 
 import os
 
 from alimaster.gui.style import use_alimaster_style
+
 
 class NewProjectWizard(Notebook):
 
@@ -21,10 +22,10 @@ class NewProjectWizard(Notebook):
         self.on_finish = callback
         self.master_frame = Frame(master)
         self.label = Label(self.master_frame,
-            text='New Project Wizard',
-            style='Heading.TLabel'
-            )
-        self.label.pack(fill=X, pady=(12,0), padx=24)
+                           text='New Project Wizard',
+                           style='Heading.TLabel'
+                           )
+        self.label.pack(fill=X, pady=(12, 0), padx=24)
         self.args = {
             'name': StringVar(),
             'author': StringVar(),
@@ -35,7 +36,7 @@ class NewProjectWizard(Notebook):
         self.args['location'].set(os.getcwd())
 
         kw['style'] = 'Wizard.TNotebook'
-        ttk.Style(master).layout('Wizard.TNotebook.Tab', '')
+        Style(master).layout('Wizard.TNotebook.Tab', '')
         super().__init__(self.master_frame, **kw)
 
         self._children = {}
@@ -67,8 +68,7 @@ class NewProjectWizard(Notebook):
               textvariable=self.args['location']
               ).grid(column=1, row=2)
 
-
-        self.page_0.pack(padx=3,pady=3)
+        self.page_0.pack(padx=3, pady=3)
 
     def next_page(self):
         self.current += 1
@@ -80,7 +80,7 @@ class NewProjectWizard(Notebook):
         self.master.destroy()
 
     def add_empty_page(self):
-        child = ttk.Frame(self)
+        child = Frame(self)
         self._children[len(self._children)] = child
         self.add(child)
 
@@ -105,17 +105,18 @@ class NewProjectWizard(Notebook):
 
     current = property(_get_current, _set_current)
 
+
 def demo():
     root = Tk()
     f = Frame(root)
 
     def open_wizard():
         top = Toplevel(root)
-        wizard = NewProjectWizard(top)
+        NewProjectWizard(top)
         top.minsize(300, 200)
 
     use_alimaster_style()
-    b = Button(f,text='open_window', command=open_wizard)
+    b = Button(f, text='open_window', command=open_wizard)
     b.pack()
     f.pack()
 

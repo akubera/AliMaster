@@ -5,15 +5,14 @@
 File creating the GUI for alimaster.analysis_builder
 """
 
-import alimaster
 from alimaster.gui.fontawesome import FontAwesome
 from alimaster.gui import SimpleWindow
 
-from tkinter import *
-from tkinter.ttk import *
-from PIL import Image, ImageTk
+from tkinter import *       # noqa
+from tkinter.ttk import *   # noqa
 
 from .new_project_wizard import NewProjectWizard
+
 
 class MainWindow(SimpleWindow):
     """
@@ -42,14 +41,15 @@ class MainWindow(SimpleWindow):
         self._setup_statusbar()
         self.frame.pack(expand=True, fill=BOTH)
 
-
     def _setup_toolbar(self):
         self.toolbar = Frame(self.window, relief=RAISED)
+
         def add_button(img_name, command=None):
             Button(self.toolbar,
                    style='Toolbar.TButton',
                    image=self.imgs[img_name],
-                       command=(lambda:print(img_name)) if command is None else command).pack(side=LEFT, padx=0, pady=2)
+                   command=(lambda: print(img_name)) if command is None
+                   else command).pack(side=LEFT, padx=0, pady=2)
 
         def add_separator():
             Separator(self.toolbar,

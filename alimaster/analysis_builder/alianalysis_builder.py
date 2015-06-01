@@ -8,6 +8,7 @@ creating analysis scripts for use with an AliAnalysis
 
 from alimaster.analysis_builder.gui import MainWindow
 
+
 class AliAnalysisBuilder:
 
     def __init__(self, root):

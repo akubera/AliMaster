@@ -4,8 +4,8 @@
 
 import sys
 
-from tkinter import *
-from tkinter.ttk import *
+from tkinter import *       # noqa
+from tkinter.ttk import *   # noqa
 
 from argparse import ArgumentParser
 
@@ -13,14 +13,22 @@ from argparse import ArgumentParser
 from .alianalysis_builder import AliAnalysisBuilder
 
 
-
 def main(args):
     """
     Main function launching analysis_builder
     """
-    parser = ArgumentParser(description="GUI helper for creating AliAnalysis scripts")
-    parser.add_argument("-c", "--conf", metavar="FILE", help="Load configuration")
-    parser.add_argument("-v", "--verbose", dest='verbose', action='store_true', help="Print helpful information")
+    parser = ArgumentParser(description=("GUI helper for creating AliAnalysis"
+                                         "scripts"))
+    parser.add_argument("-c", "--conf",
+                        metavar="FILE",
+                        help="Load configuration"
+                        )
+    parser.add_argument("-v",
+                        "--verbose",
+                        dest='verbose',
+                        action='store_true',
+                        help="Print helpful information"
+                        )
     args = parser.parse_args(args)
 
     root = Tk()
