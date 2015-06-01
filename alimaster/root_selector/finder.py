@@ -3,6 +3,9 @@
 #
 
 import asyncio
+from glob import glob
+import os
+
 
 class Finder:
     """
@@ -15,8 +18,6 @@ class Finder:
         Uses standard library os.walk to walk the path, looking for any
         directories that contain the file 'root-config'. This is a generator.
         """
-        from glob import glob
-        import os
         for root, dirnames, filenames in os.walk(path):
             if 'root-config' in filenames:
                 yield root
@@ -29,8 +30,6 @@ class Finder:
         to be the 'bin' directory of the aliroot installation, and the parent
         path is returned. This is a generator.
         """
-        from glob import glob
-        import os
         for root, dirnames, filenames in os.walk(path):
             if 'aliroot' in filenames:
                 yield root

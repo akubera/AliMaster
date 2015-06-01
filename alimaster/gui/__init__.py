@@ -1,6 +1,8 @@
 #
 # alimaster/gui/__init__.py
 #
+# flake8: noqa
+#
 
 from os import path
 from .. import __version__

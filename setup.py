@@ -1,6 +1,9 @@
 #
 # setup.py
 #
+"""
+A (non-web) graphic user interface for interacting with AliMonitor
+"""
 
 import os
 from glob import glob
@@ -10,7 +13,10 @@ from importlib.machinery import SourceFileLoader
 metadata_path = os.path.join(".", "alimaster", "metadata.py")
 metadata = SourceFileLoader("metadata", metadata_path).load_module()
 
-REQUIRES = ['pillow']
+REQUIRES = [
+    'pillow',
+    'OpenSSL'
+]
 
 EXTRAS = {
     ':python_version=="3.3"': ['asyncio>=0.2.1']
@@ -31,8 +37,6 @@ CLASSIFIERS = [
     "Natural Language :: English"
 ]
 
-desc = "A (non-web) graphic user interface for interacting with AliMonitor"
-
 setup(
     name=metadata.package,
     version=metadata.version,
@@ -40,7 +44,7 @@ setup(
     author_email=metadata.author_email,
     url=metadata.url,
     license=metadata.license,
-    description=desc,
+    description=__doc__.strip(),
     packages=PACKAGES,
     scripts=SCRIPTS,
     install_requires=REQUIRES,
