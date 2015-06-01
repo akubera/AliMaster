@@ -2,8 +2,8 @@
 # alimaster/analysis_builder/analysis_builder.py
 #
 """
-The Analysis Builder package will offer an easy and extendable interface for
-creating analysis scripts for use with an AliAnalysis
+The Analysis Builder package offers an easy and extendable interface for
+creating analysis scripts for use with an AliAnalysis.
 """
 
 from alimaster.analysis_builder.gui import MainWindow

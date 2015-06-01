@@ -19,7 +19,8 @@ def main(args):
     """
     parser = ArgumentParser(description=("GUI helper for creating AliAnalysis"
                                          "scripts"))
-    parser.add_argument("-c", "--conf",
+    parser.add_argument("-c",
+                        "--conf",
                         metavar="FILE",
                         help="Load configuration"
                         )

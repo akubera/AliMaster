@@ -5,13 +5,19 @@
 
 from tkinter import *       # noqa
 from tkinter.ttk import *   # noqa
+from PIL import ImageTk
 
 import os
 
 from alimaster.gui.style import use_alimaster_style
+from alimaster.gui.fontawesome import FontAwesome
 
 
 class NewProjectWizard(Notebook):
+    """
+    The gui window for creating a new analysis project.
+    """
+    title = 'AnalysisBuilder - New Project'
 
     def __init__(self, master=None, callback=None, **kw):
         """
@@ -22,10 +28,17 @@ class NewProjectWizard(Notebook):
         self.on_finish = callback
         self.master_frame = Frame(master)
         self.label = Label(self.master_frame,
-                           text='New Project Wizard',
+                           text=self.title,
                            style='Heading.TLabel'
                            )
         self.label.pack(fill=X, pady=(12, 0), padx=24)
+
+        photoimage = ImageTk.PhotoImage(FontAwesome.generate_icon('magic', 50))
+        self.lbl = Label(self.master_frame, image=photoimage)
+        self.lbl.photo = photoimage
+        self.lbl.pack(side=LEFT, padx=50) # fill=X, pady=(12, 0), padx=24)
+        # lbl.grid(column=0, row=0)
+
         self.args = {
             'name': StringVar(),
             'author': StringVar(),
@@ -53,20 +66,22 @@ class NewProjectWizard(Notebook):
     def setup_page_0(self, frame):
         self.page_0 = Frame(frame)
 
-        Label(self.page_0, text='Name: ').grid(column=0, row=0)
+        Label(self.page_0, text='Details').grid(column=0, row=0, columnspan=2)
+
+        Label(self.page_0, text='Name: ', justify=RIGHT).grid(column=0, row=1)
         Entry(self.page_0,
               textvariable=self.args['name']
-              ).grid(column=1, row=0)
-
-        Label(self.page_0, text='Author: ').grid(column=0, row=1)
-        Entry(self.page_0,
-              textvariable=self.args['author']
               ).grid(column=1, row=1)
 
-        Label(self.page_0, text='Location: ').grid(column=0, row=2)
+        Label(self.page_0, text='Author: ', anchor=E).grid(column=0, row=2)
+        Entry(self.page_0,
+              textvariable=self.args['author']
+              ).grid(column=1, row=2)
+
+        Label(self.page_0, text='Location: ', anchor=E).grid(column=0, row=3)
         Entry(self.page_0,
               textvariable=self.args['location']
-              ).grid(column=1, row=2)
+              ).grid(column=1, row=3)
 
         self.page_0.pack(padx=3, pady=3)
 
@@ -118,7 +133,9 @@ def demo():
     use_alimaster_style()
     b = Button(f, text='open_window', command=open_wizard)
     b.pack()
-    f.pack()
+    # f.pack()
+
+    NewProjectWizard(root)
 
     root.mainloop()
 
