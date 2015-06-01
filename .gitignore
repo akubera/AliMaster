@@ -14,12 +14,14 @@ develop-eggs/
 dist/
 downloads/
 eggs/
-lib/
-lib64/
+bin/
+lib
+lib64
 parts/
 sdist/
 var/
 *.egg-info/
+pyvenv.cfg
 .installed.cfg
 *.egg
 
