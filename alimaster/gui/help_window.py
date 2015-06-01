@@ -17,9 +17,9 @@ class HelpWindow(Window):
     toolbar_icon_size = 16
 
     imgs = {
-        "larrow": FontAwesome.generate_icon('chevron-left', tb_icon_size),
-        "rarrow": FontAwesome.generate_icon('chevron-right', tb_icon_size),
-        "home": FontAwesome.generate_icon('home', tb_icon_size),
+        "larrow": FontAwesome.generate_icon('chevron-left', toolbar_icon_size),
+        "rarrow": FontAwesome.generate_icon('chevron-right', toolbar_icon_size),
+        "home": FontAwesome.generate_icon('home', toolbar_icon_size),
         "folder": FontAwesome.generate_icon('folder', 12)
     }
 
