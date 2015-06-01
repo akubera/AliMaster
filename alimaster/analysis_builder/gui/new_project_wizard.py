@@ -27,14 +27,14 @@ class NewProjectWizard(Notebook):
         self.master_frame = Frame(master)
         self.label = Label(self.master_frame,
                            text=self.title,
-                           style='Heading.TLabel'
+                           style='Title.Wizard.TLabel'
                            )
         self.label.pack(fill=X, pady=(12, 0), padx=24)
 
         photoimage = ImageTk.PhotoImage(FontAwesome.generate_icon('magic', 50))
         self.lbl = Label(self.master_frame, image=photoimage)
         self.lbl.photo = photoimage
-        self.lbl.pack(side=LEFT, padx=50)
+        self.lbl.pack(side=LEFT, padx=(20, 10))
 
         self.args = {
             'name': StringVar(),
@@ -46,7 +46,7 @@ class NewProjectWizard(Notebook):
         self.args['location'].set(os.getcwd())
 
         kw['style'] = 'Wizard.TNotebook'
-        Style(master).layout('Wizard.TNotebook.Tab', '')
+        # Style(master).layout('Wizard.TNotebook.Tab', '')
         super().__init__(self.master_frame, **kw)
 
         self._children = {}
@@ -76,7 +76,8 @@ class NewProjectWizard(Notebook):
 
         Label(self.page_0, text='Name: ', justify=RIGHT).grid(column=0, row=1)
         Entry(self.page_0,
-              textvariable=self.args['name']).grid(column=1, row=1)
+              textvariable=self.args['name'],
+              takefocus=true).grid(column=1, row=1)
 
         Label(self.page_0, text='Author: ', anchor=E).grid(column=0, row=2)
         Entry(self.page_0,
