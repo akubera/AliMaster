@@ -48,6 +48,20 @@ style_theme = {
             "padding": [5, 1]
         }
     },
+
+    "Title.Wizard.TLabel": {
+        "configure": {
+            'font': ('DejaVu Mono', 18)
+        }
+    },
+
+    "Heading.Wizard.TLabel": {
+        "configure": {
+            "font": ('Helvetica', 15),
+            "padding": [0, 2]
+        }
+    },
+
     "alienwindow.TFrame": {
         "configure": {
             "padding": [5, 1]

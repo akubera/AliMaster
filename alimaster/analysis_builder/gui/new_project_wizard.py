@@ -1,8 +1,6 @@
 #
 # alimaster/analysis_builder/gui/new_project_wizard.py
 #
-
-
 from tkinter import *       # noqa
 from tkinter.ttk import *   # noqa
 from PIL import ImageTk
@@ -36,8 +34,7 @@ class NewProjectWizard(Notebook):
         photoimage = ImageTk.PhotoImage(FontAwesome.generate_icon('magic', 50))
         self.lbl = Label(self.master_frame, image=photoimage)
         self.lbl.photo = photoimage
-        self.lbl.pack(side=LEFT, padx=50) # fill=X, pady=(12, 0), padx=24)
-        # lbl.grid(column=0, row=0)
+        self.lbl.pack(side=LEFT, padx=50)
 
         self.args = {
             'name': StringVar(),
@@ -63,25 +60,31 @@ class NewProjectWizard(Notebook):
         self.master_frame.pack(fill='both', expand=True)
         self.pack(fill='both', expand=True)
 
+        button_frame = Frame(self.master_frame)
+        Button(button_frame, text="Previous").pack(side=LEFT)
+        Button(button_frame, text="Next").pack(side=LEFT)
+        button_frame.pack(anchor=SE, padx=3, pady=(1, 3))
+
     def setup_page_0(self, frame):
         self.page_0 = Frame(frame)
 
-        Label(self.page_0, text='Details').grid(column=0, row=0, columnspan=2)
+        Label(self.page_0,
+              text='Details',
+              style='Heading.Wizard.TLabel').grid(column=0,
+                                                  row=0,
+                                                  columnspan=2)
 
         Label(self.page_0, text='Name: ', justify=RIGHT).grid(column=0, row=1)
         Entry(self.page_0,
-              textvariable=self.args['name']
-              ).grid(column=1, row=1)
+              textvariable=self.args['name']).grid(column=1, row=1)
 
         Label(self.page_0, text='Author: ', anchor=E).grid(column=0, row=2)
         Entry(self.page_0,
-              textvariable=self.args['author']
-              ).grid(column=1, row=2)
+              textvariable=self.args['author']).grid(column=1, row=2)
 
         Label(self.page_0, text='Location: ', anchor=E).grid(column=0, row=3)
         Entry(self.page_0,
-              textvariable=self.args['location']
-              ).grid(column=1, row=3)
+              textvariable=self.args['location']).grid(column=1, row=3)
 
         self.page_0.pack(padx=3, pady=3)
 
