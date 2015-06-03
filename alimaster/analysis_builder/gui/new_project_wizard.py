@@ -78,7 +78,11 @@ class NewProjectWizard(Notebook):
         button_frame.pack(anchor=SE, padx=3, pady=(1, 3))
 
     def setup_page_0(self, frame):
+        from tkinter.filedialog import askdirectory
+
         self.page_0 = Frame(frame)
+
+        entry_width = 45
 
         Label(self.page_0,
               text='Details',
@@ -89,17 +93,29 @@ class NewProjectWizard(Notebook):
         Label(self.page_0, text='Name: ', justify=RIGHT).grid(column=0, row=1)
         Entry(self.page_0,
               textvariable=self.args['name'],
+              width=entry_width,
               takefocus=True).grid(column=1, row=1)
 
         Label(self.page_0, text='Author: ', anchor=E).grid(column=0, row=2)
         Entry(self.page_0,
+              width=entry_width,
               textvariable=self.args['author']).grid(column=1, row=2)
 
         Label(self.page_0, text='Location: ', anchor=E).grid(column=0, row=3)
         Entry(self.page_0,
+              width=entry_width,
               textvariable=self.args['location']).grid(column=1,
                                                        row=3,
                                                        pady=(0, 10))
+
+        def set_file_name():
+            filename = askdirectory()  # filetypes=('*'))
+            if filename:
+                self.args['location'].set(filename)
+
+        Button(self.page_0,
+               text="...",
+               command=set_file_name).grid(column=2, row=3, padx=6, pady=(0,10))
 
         self.page_0.pack(padx=3, pady=3)
 
