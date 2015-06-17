@@ -76,7 +76,6 @@ def on_root_import(func):
     If ROOT is already loaded, the function runs immediately in the caller's
     thread.
     """
-    global _root_load_callbacks
     if "ROOT" not in sys.modules:
         _root_load_callbacks.append(func)
     else:
