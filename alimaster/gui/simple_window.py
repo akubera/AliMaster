@@ -8,6 +8,8 @@ Defines a 'simple_window' which should be subclassed to a specific window.
 from tkinter import *      # noqa
 from tkinter.ttk import *  # noqa
 
+from PIL import ImageTk
+
 
 class SimpleWindow():
     """
