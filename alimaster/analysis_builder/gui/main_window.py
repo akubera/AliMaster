@@ -30,6 +30,7 @@ class MainWindow(SimpleWindow):
         'project': FontAwesome.generate_icon('cube', small_img_size),
         'config': FontAwesome.generate_icon('gears', small_img_size),
         'file': FontAwesome.generate_icon('file', small_img_size),
+        'cut': FontAwesome.generate_icon('scissors', small_img_size),
     }
 
     def __init__(self, builder, root):
@@ -100,7 +101,7 @@ class MainWindow(SimpleWindow):
                               text="config")
         self.tree_view.insert(a,
                               'end',
-                              image=self.imgs['file'],
+                              image=self.imgs['cut'],
                               text="LambdaCut")
 
 
