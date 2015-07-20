@@ -66,31 +66,30 @@ class FileBrowserWindow(Window):
         self.statusbar = Label(self.frame,
                                textvar=self.status,
                                font=("DejaVu Sans", -10),
-                               relief='sunken'
-                               ).pack(expand=0,
-                                      fill=X,
-                                      side=BOTTOM,
-                                      anchor=S,
-                                      padx=1,
-                                      pady=2)
-
-        self.set_status("Initializing")
-
-        #     self.tree_view = (parent, **kwargs)
+                               relief='sunken')
+        self.statusbar.pack(expand=0,
+                            fill=X,
+                            side=BOTTOM,
+                            anchor=S,
+                            padx=1,
+                            pady=2)
 
         self.sidebar = Treeview(self.frame,
                                 style='SidebarFileBrowser.TFrame'
-                                ).pack(fill=Y, side=LEFT, expand=0)
+                                )
+        self.sidebar.pack(fill=Y, side=LEFT, expand=0)
 
         self.content = Frame(self.frame,
                              relief=FLAT,
                              style='MainFileBrowser.TFrame'
-                             ).pack(fill=BOTH, expand=1)
+                             )
+        self.content.pack(fill=BOTH, expand=1)
 
         self.label = Label(self.content,
                            text="Files",
                            image=self.imgs["folder"],
-                           compound='left').pack()
+                           compound='left')
+        self.label.pack()
 
         self.frame.pack(fill=BOTH, expand=True)
 
