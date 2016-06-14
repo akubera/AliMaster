@@ -14,9 +14,14 @@ def aliroot_class(cls):
     return cls
 
 
-class AliRootClass():
+class AliRootClass:
+    """
+    Python interface to AliRoot.
+    """
 
     def __init__(self, **kargs):
+        """
+        """
         print("[AliRootClass]")
         arg_str = ','.join(['%s = %s' % s for s in kargs.items()])
         print(" Custom Constructor {}({})".format(self.__class__.__name__,
@@ -35,6 +40,9 @@ class AliRootClass():
 
     @classmethod
     def build_from_json(cls, json):
+        """
+        Return AliRootClass built from json object.
+        """
         required_fields = {'classname'}
         if isinstance(json, str):
             from json import loads
@@ -44,13 +52,20 @@ class AliRootClass():
             missing_keys = required_fields - json.keys()
             err_str = "JSON missing required fields : {}".format(missing_keys)
             raise Exception(err_str)
+        self = cls.__new__()
+        return self
 
     def save_to_json(self):
+        """
+        Return a dictionary equivalent of this object
+        """
         obj = {'classname': self.classname}
-        # for
         return obj
 
     def write_to_json_string(self):
+        """
+        Return a JSONified string of this object
+        """
         from json import dumps
         return dumps(self.save_to_json())
 
