@@ -36,16 +36,17 @@ class Application:
         """
         Construct the alimaster application
 
-        @param opts: Extra configuration options
-        @param gui_thread: If false, runs in current thread, if True, creates
-            new thread, if thread runs in THAT thread
-        @param handle_signals: Will automatically create a signal listener to
-            catch and quit on SIGINT
-        @param title: Title of the main window
-        @param window_builder: function providing the root window
+        Parameters:
+            opts (dict): Extra configuration options
+            gui_thread (bool): If false, runs in current thread, if True, creates
+                new thread, if thread runs in THAT thread
+            handle_signals (bool): Will automatically create a signal listener to
+                catch and quit on SIGINT
+            title (str): Title of the main window
+            window_builder (Window): function providing the root window
         """
         self.generate_window = window_builder
-        self.window_info = {"w": width, "h": height, "title": title}
+        self.window_info = dict(w=width, h=height, title=title)
 
         # set the correct thread
         if gui_thread is True:

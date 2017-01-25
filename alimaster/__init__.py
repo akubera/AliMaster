@@ -1,6 +1,7 @@
 #
 # alimaster/__init__.py
 #
+# flake8: noqa
 #
 """
 AliMaster intends to be a utility for managing files and jobs on CERN's grid
@@ -34,9 +35,9 @@ def RES(f):
     return LOCAL(path.join('res', f))
 
 
-from .gui.mainwindow import MainWindow              # noqa
-from alimaster.application import Application       # noqa
-from .alicommunicator import AliCommunicator        # noqa
+from .gui.mainwindow import MainWindow
+from .application import Application
+from .alicommunicator import AliCommunicator
 
 __all__ = [
     '__version__',
@@ -107,4 +108,5 @@ def import_root_module():
                               ROOT.gSystem.GetLibraries()
                               ))
 
-    [func() for func in _root_load_callbacks]
+    for func in _root_load_callbacks:
+        func()

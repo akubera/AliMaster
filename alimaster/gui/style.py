@@ -14,7 +14,7 @@ def get_style():
     global style, style_theme
     if style is not None:
         return style
-    style = ttk.Style()
+    style = Style()
     style.theme_create("alimaster", parent='alt', settings=style_theme)
     return style
 
